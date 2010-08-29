@@ -8,6 +8,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 
 from device import Device, DeviceGroup, Manufactorer
+from myuser import User
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -20,10 +21,24 @@ class MainPage(webapp.RequestHandler):
         manQuery = Manufactorer.all().order('-name')
         mans = manQuery.fetch(10)
 
+        u = User()
+        if users.get_current_user():
+            u.googleUser = users.get_current_user()
+            userText = u.googleUser
+            url = users.create_logout_url(self.request.uri)
+            url_linktext = 'Logout'
+        else:
+            userText = "<none>"
+            url = users.create_login_url(self.request.uri)
+            url_linktext = 'Login'            
+
         template_values = {
             'groups': groups, 
             'devices': devices,
             'manufactorers': mans, 
+            'userText': userText, 
+            'url': url, 
+            'urlText': url_linktext, 
             }
 
         path = os.path.join(os.path.dirname(__file__), 'index.html')

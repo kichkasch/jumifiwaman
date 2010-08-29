@@ -4,12 +4,22 @@
   </head>
 
   <body>
+    Current user is:
+    {{ userText }} <a href = '{{url}}'>{{urlText}}</a>
+    <hr/>
+    <h2>Devices</h2>
+    <ul>
     {% for device in devices %}
-      <blockquote>{{ device.name|escape }} ({{ device.deviceID}})</blockquote>
+      <li>{{ device.name|escape }} ({{ device.deviceID}})
     {% if device.group %}
-      {{ device.group.name }}
+      <ul><li>type: {{ device.group.name }}</li></ul>
     {% endif %}
+    {% if device.manufactorer %}
+      <ul><li>manufactorer: {{device.manufactorer.name}}</li></ul>
+    {% endif %}
+    </li>
     {% endfor %}
+    </ul>
 
     <form action="/newDevice" method="post">
       <div><input name="deviceName" size="60"></input></div>
@@ -28,6 +38,7 @@
     </form>
 
     <hr/>
+    <h2>Device groups</h2>    
     Known Groups
     <ul>
     {% for group in groups %}
@@ -40,6 +51,7 @@
     </form>    
 
     <hr/>
+    <h2>Manufactorers</h2>
     Known Manufactorers
     <ul>
     {% for man in manufactorers %}

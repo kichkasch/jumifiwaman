@@ -14,3 +14,4 @@ class Device(db.Model):
     deviceID = db.StringProperty()
     group = db.ReferenceProperty(DeviceGroup)
     manufactorer = db.ReferenceProperty(Manufactorer)
+    
