@@ -6,13 +6,52 @@
   <body>
     {% for device in devices %}
       <blockquote>{{ device.name|escape }} ({{ device.deviceID}})</blockquote>
+    {% if device.group %}
+      {{ device.group.name }}
+    {% endif %}
     {% endfor %}
 
     <form action="/newDevice" method="post">
-      <div><textarea name="deviceName" rows="1" cols="60"></textarea></div>
-      <div><textarea name="deviceID" rows="1" cols="60"></textarea></div>
-      <div><input type="submit" value="Add Device"></div>
+      <div><input name="deviceName" size="60"></input></div>
+      <div><input name="deviceID" size="60"></input></div>
+      <select name="deviceGroup" size="1">
+      {% for group in groups %}
+      <option>{{group.name}}</option>
+      {% endfor %}
+      </select>
+      <select name="manufactorer" size="1">
+      {% for man in manufactorers%}
+      <option>{{man.name}}</option>
+      {% endfor %}
+      </select>
+      <div><input type="submit" value="Add Device"/></div>
     </form>
 
+    <hr/>
+    Known Groups
+    <ul>
+    {% for group in groups %}
+    <li> {{ group.name }} </li>
+    {% endfor %}
+    </ul>
+    <form action="/newDeviceGroup" method="post">
+      <div><input name="groupName" size="60"></input></div>
+      <div><input type="submit" value="Add Device Group"/></div>
+    </form>    
+
+    <hr/>
+    Known Manufactorers
+    <ul>
+    {% for man in manufactorers %}
+    <li> {{ man.name }} (<a href="{{ man.website }}">web site</a>) </li>
+    {% endfor %}
+    </ul>
+    <form action="/newManufactorer" method="post">
+      <div><input name="manName" size="60"></input></div>
+      <div><input name="manWebsite" size="60"></input></div>
+      <div><input type="submit" value="Add Manufactorer"/></div>
+    </form>    
+
+    
   </body>
 </html>
