@@ -72,12 +72,20 @@ class AddManufactorer(webapp.RequestHandler):
         man.put()        
         self.redirect('/')
 
+class RemoveManufactoer(webapp.RequestHandler):
+    def post(self):
+        query = Manufactorer.all().filter('name = ', self.request.get('manufactorer'))
+        manufactorer = query.fetch(1)[0]
+        manufactorer.delete()
+        self.redirect('/')
+
 def main():
     application = webapp.WSGIApplication(
                                      [('/', MainPage),
                                       ('/newDevice', AddDevice), 
                                       ('/newDeviceGroup', AddDeviceGroup), 
-                                      ('/newManufactorer', AddManufactorer)],
+                                      ('/newManufactorer', AddManufactorer), 
+                                      ('/removeManufactorer', RemoveManufactoer)],
                                      debug=True)
     run_wsgi_app(application)
 

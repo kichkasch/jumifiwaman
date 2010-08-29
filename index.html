@@ -1,11 +1,48 @@
 <html>
 <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+	<!-- tab styling -->
+	<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/css/tabs.css" />
+
+	<!-- include the Tools -->
+	<script src="http://cdn.jquerytools.org/1.2.4/full/jquery.tools.min.js"></script>
+	<!-- standalone page styling (can be removed) -->
+	<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/standalone.css"/>	
+	<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/overlay-apple.css"/>
+    
+    <title>JuMi Firmware Manager</title>
   </head>
 
   <body>
+  <p>
+  <table border="0" width="100%"><tr>
+  <td width="10"/>
+    <td >
     Current user is:
-    {{ userText }} <a href = '{{url}}'>{{urlText}}</a>
+    {{ userText }} <a href = '{{url}}'>{{urlText}}</a></td>
+      <td width="20%" align="right"><button rel="#apple" type="button">Help</button></td>
+  <td width="10"/>
+
+    </tr></table>
+    </p>
+<!-- each overlay is initialized with this single JavaScript call -->
+<script>
+$(function() {
+		$("button[rel]").overlay({mask: '#000', effect: 'apple'});
+});
+</script>
+
+    
+<ul class="tabs">
+	<li><a href="#first">My Devices</a></li>
+	<li><a href="#second">Device Manager</a></li>
+	<li><a href="#third">Firmware Manager</a></li>
+</ul>
+
+<div class="panes">
+<div>My devices. Coming soon ...</div>
+<div>
+    
     <hr/>
     <h2>Devices</h2>
     <ul>
@@ -21,21 +58,33 @@
     {% endfor %}
     </ul>
 
+    
+<p>
+	<button class="modalInput" rel="#promptDevice">New Device</button>
+</p>    
+<div class="modal" id="promptDevice">
+	<h2>Add Device</h2>
+	<p>
+		Please provide details for the new device.
+	</p>
     <form action="/newDevice" method="post">
-      <div><input name="deviceName" size="60"></input></div>
-      <div><input name="deviceID" size="60"></input></div>
-      <select name="deviceGroup" size="1">
+      <p>Name<br/><input name="deviceName"></input></p>
+      <p>Serial number<br/><input name="deviceID"></input></p>
+      <p>Device group<br/><select name="deviceGroup" size="1">
       {% for group in groups %}
       <option>{{group.name}}</option>
       {% endfor %}
-      </select>
-      <select name="manufactorer" size="1">
+      </select></p>
+      <p>Manufactorer<br/><select name="manufactorer" size="1">
       {% for man in manufactorers%}
       <option>{{man.name}}</option>
       {% endfor %}
-      </select>
-      <div><input type="submit" value="Add Device"/></div>
-    </form>
+      </select> </p>
+     <p><button type="submit" > OK </button>
+    <button type="button" class="close"> Cancel </button></p>
+    </form>    
+</div>        
+    
 
     <hr/>
     <h2>Device groups</h2>    
@@ -45,25 +94,137 @@
     <li> {{ group.name }} </li>
     {% endfor %}
     </ul>
+    
+<p>
+	<button class="modalInput" rel="#promptGroup">New Device Group</button>
+</p>    
+<div class="modal" id="promptGroup">
+	<h2>Add Device Group</h2>
+	<p>
+		Please provide details for the new device group.
+	</p>
     <form action="/newDeviceGroup" method="post">
-      <div><input name="groupName" size="60"></input></div>
-      <div><input type="submit" value="Add Device Group"/></div>
+      <p>Name<br/><input name="groupName"></input></p>
+     <p><button type="submit" > OK </button>
+    <button type="button" class="close"> Cancel </button></p>
     </form>    
+</div>    
+    
+    
 
     <hr/>
     <h2>Manufactorers</h2>
     Known Manufactorers
     <ul>
     {% for man in manufactorers %}
-    <li> {{ man.name }} (<a href="{{ man.website }}">web site</a>) </li>
+    <li> {{ man.name }} (<a href="{{ man.website }}">web site</a>)</li>
     {% endfor %}
     </ul>
+    
+<p>
+	<button class="modalInput" rel="#promptMan">New Manufactorer</button>
+</p>    
+<div class="modal" id="promptMan">
+	<h2>Add Manufactorer</h2>
+	<p>
+		Please provide details for new manufactorer entry.
+	</p>
     <form action="/newManufactorer" method="post">
-      <div><input name="manName" size="60"></input></div>
-      <div><input name="manWebsite" size="60"></input></div>
-      <div><input type="submit" value="Add Manufactorer"/></div>
+      <p>Name<br/><input name="manName"></input></p>
+      <p>Home page<br/><input name="manWebsite"></input></p>
+     <p><button type="submit" > OK </button>
+    <button type="button" class="close"> Cancel </button></p>
     </form>    
+</div>
+    
 
+    </div>
+	<div>Firmware Manager ... coming soon ...</div>
+</div> <!--panes -->
+  
+
+<div class="apple_overlay" id="apple">
+	<h2 style="margin:0px">JuMi Firmware Manager - Help</h2>
+
+	<img src="http://static.flowplayer.org/img/title/eye192.png" style="float: left; margin:0px 20px 0 0;" />
+
+	<p>
+
+		<strong>Introduction</strong>
+	</p>
+	
+	<p>
+		<strong>My Devices</strong>
+	</p>
+	
+	<p>
+		<strong>Device Manager</strong>
+	</p>
+
+    <p><strong>Firmware Manager</strong></p>
+    
+	<p style="color:#666">
+    Copyright with <a href="http://www.kichkasch.de">Michael Pilgermann</a>; license is <a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>, <a href="mailto:kichkasch@gmx.de">email me</a> in case of questions.
+	</p>
+</div>
+  
+  
+<script>
+// What is $(document).ready ? See: http://flowplayer.org/tools/documentation/basics.html#document_ready
+$(document).ready(function() {
+
+var triggers = $(".modalInput").overlay({
+
+	// some mask tweaks suitable for modal dialogs
+	mask: {
+		color: '#ebecff',
+		loadSpeed: 200,
+		opacity: 0.9
+	},
+
+	closeOnClick: false
+});
+
+
+var buttons = $("#yesno button").click(function(e) {
+	
+	// get user input
+	var yes = buttons.index(this) === 0;
+
+	// do something with the answer
+	triggers.eq(0).html("You clicked " + (yes ? "yes" : "no"));
+});
+
+
+$("#prompt form").submit(function(e) {
+
+	// close the overlay
+	triggers.eq(1).overlay().close();
+
+	// get user input
+	var input = $("input", this).val();
+
+	// do something with the answer
+	triggers.eq(1).html(input);
+
+	// do not submit the form
+	return e.preventDefault();
+});
+
+});
+
+// perform JavaScript after the document is scriptable.
+$(function() {
+	// setup ul.tabs to work as tabs for each div directly under div.panes
+	$("ul.tabs").tabs("div.panes > div");
+});
+
+
+
+</script>
+
+  
+    
     
   </body>
 </html>
