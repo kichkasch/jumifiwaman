@@ -1,0 +1,18 @@
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+
+  <body>
+    {% for device in devices %}
+      <blockquote>{{ device.name|escape }} ({{ device.deviceID}})</blockquote>
+    {% endfor %}
+
+    <form action="/newDevice" method="post">
+      <div><textarea name="deviceName" rows="1" cols="60"></textarea></div>
+      <div><textarea name="deviceID" rows="1" cols="60"></textarea></div>
+      <div><input type="submit" value="Add Device"></div>
+    </form>
+
+  </body>
+</html>
