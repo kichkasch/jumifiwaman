@@ -54,8 +54,14 @@ body {
 	}
 	
 #apple {
-		background-image:url(http://static.flowplayer.org/img/overlay/apple.png);
+        background-image:url(http://static.flowplayer.org/img/overlay/apple.png);
 		color:#fff;
 		padding:50px 70px;
+		width:700px;		
+		height:250px;    
 	}
 
+#apple.overlay {
+		width:600px;		
+		height:250px;
+	}

@@ -19,8 +19,16 @@
   <td width="10"/>
     <td >
     Current user is:
-    {{ userText }} <a href = '{{url}}'>{{urlText}}</a></td>
-      <td width="20%" align="right"><button rel="#apple" type="button">Help</button></td>
+    {{ userText }} </td>
+    
+    <td width="20%" align="right">
+    {% if profileText %}
+     <button>{{profileText}}</button>
+     {% endif %}
+    <button onclick="location.href='{{url}}'">{{urlText}}</button>
+     </td>
+     
+      <td width="15%" align="right"><button rel="#apple" type="button">Help</button></td>
   <td width="10"/>
 
     </tr></table>
@@ -40,7 +48,7 @@ $(function() {
 </ul>
 
 <div class="panes">
-<div>My devices. Coming soon ...</div>
+<div>My devices. Coming soon ...<a href="#third">open third tab</a></div>
 <div>
     
     <hr/>
@@ -150,26 +158,67 @@ $(function() {
 
 	<p>
 
-		<strong>Introduction</strong>
+		<strong>Introduction</strong> <br/>
+JuMi Firmware Manager (JuMiFiWaMan) is a web-based tool allowing you to
+comfortably manage the update management process of firmwares for your
+(multimedia) devices (home).</p>
+
+<p>Background is the steadily increasing dependence of up-to-date firmware of
+such multimedia devices. In order to get around bugs (which came with the
+shipped product) or to make use of latest features, the latest firmware needs
+to be installed. As the number of devices grows, it becomes quite a task to
+check for updates of firmware of all these devices on a frequent basis.</p>
+
+<p>JuMiFiWaMan supports you exactly on this process. A database in the
+background is holding information about many device (perspectively at least)
+and firmware versions available for them. You only need to assemble your set
+of device (by choosing from this repository) - and (again perspectively) you
+get informed whenever new versions are released - be it on the web side or
+via email notification service.
 	</p>
 	
 	<p>
-		<strong>My Devices</strong>
+		<strong>My Devices</strong><br/>
+This section enables you to assemble and manage your own set of devices. It
+also provides an overview on current state of available and performed updates
+as well as it supports reports on histories for updates.
+        
 	</p>
 	
 	<p>
-		<strong>Device Manager</strong>
+		<strong>Device Manager</strong><br/>
+With this section everybody can take care of an exhaustive set of devices
+being covered with JuMiFiWaMan. All you need to provide is an unique id
+number for each device and a name as well as the name of the manufacturer. On
+top, a grouping of devices (e.g. all DVD-Players etc.) is supported.
+
+        
 	</p>
 
-    <p><strong>Firmware Manager</strong></p>
-    
+    <p><strong>Firmware Manager</strong>
+In this section the up-to-date information for new firmware releases is to be
+maintained. In the beginning, this will exclusively be a community based
+approach (manually check for updates and insert information) - later on
+(semi) automatic agents shall take care of this update process.</p>
+
 	<p style="color:#666">
-    Copyright with <a href="http://www.kichkasch.de">Michael Pilgermann</a>; license is <a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>, <a href="mailto:kichkasch@gmx.de">email me</a> in case of questions.
+Copyright with <a href="http://www.kichkasch.de">Michael Pilgermann</a>; license is <a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>, 
+<a href="mailto:kichkasch@gmx.de">email me</a> in case of questions. Thanks to <a href="http://code.google.com/appengine/">Google App Engine </a>
+for free web app hosting and framework as well as <a href="http://static.flowplayer.org/tools/index.html">jQueryTOOLS</a> for Javascript jQuery library.
+
 	</p>
 </div>
   
   
 <script>
+// perform JavaScript after the document is scriptable.
+$(function() {
+	// setup ul.tabs to work as tabs for each div directly under div.panes
+	$("ul.tabs").tabs("div.panes > div", { history: true });
+});
+
+
+
 // What is $(document).ready ? See: http://flowplayer.org/tools/documentation/basics.html#document_ready
 $(document).ready(function() {
 
@@ -211,12 +260,6 @@ $("#prompt form").submit(function(e) {
 	return e.preventDefault();
 });
 
-});
-
-// perform JavaScript after the document is scriptable.
-$(function() {
-	// setup ul.tabs to work as tabs for each div directly under div.panes
-	$("ul.tabs").tabs("div.panes > div");
 });
 
 

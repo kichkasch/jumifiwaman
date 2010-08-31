@@ -11,6 +11,7 @@ from device import Device, DeviceGroup, Manufactorer
 from myuser import User
 
 class MainPage(webapp.RequestHandler):
+    
     def get(self):
         device_query = Device.all().order('-name')
         devices = device_query.fetch(10)
@@ -27,10 +28,12 @@ class MainPage(webapp.RequestHandler):
             userText = u.googleUser
             url = users.create_logout_url(self.request.uri)
             url_linktext = 'Logout'
+            profText = 'Profile Settings'
         else:
             userText = "<none>"
             url = users.create_login_url(self.request.uri)
-            url_linktext = 'Login'            
+            url_linktext = 'Login'          
+            profText = None
 
         template_values = {
             'groups': groups, 
@@ -39,6 +42,7 @@ class MainPage(webapp.RequestHandler):
             'userText': userText, 
             'url': url, 
             'urlText': url_linktext, 
+            'profileText': profText, 
             }
 
         path = os.path.join(os.path.dirname(__file__), 'index.html')
@@ -55,14 +59,14 @@ class AddDevice(webapp.RequestHandler):
         query = Manufactorer.all().filter('name = ', self.request.get('manufactorer'))
         device.manufactorer = query.fetch(1)[0]
         device.put()
-        self.redirect('/')
+        self.redirect('/#second')
 
 class AddDeviceGroup(webapp.RequestHandler):
     def post(self):
         group = DeviceGroup()
         group.name = self.request.get('groupName')
         group.put()        
-        self.redirect('/')
+        self.redirect('/#second')
 
 class AddManufactorer(webapp.RequestHandler):
     def post(self):
@@ -70,14 +74,14 @@ class AddManufactorer(webapp.RequestHandler):
         man.name = self.request.get('manName')
         man.website = self.request.get('manWebsite')
         man.put()        
-        self.redirect('/')
+        self.redirect('/#second')
 
 class RemoveManufactoer(webapp.RequestHandler):
     def post(self):
         query = Manufactorer.all().filter('name = ', self.request.get('manufactorer'))
         manufactorer = query.fetch(1)[0]
         manufactorer.delete()
-        self.redirect('/')
+        self.redirect('/#second')
 
 def main():
     application = webapp.WSGIApplication(

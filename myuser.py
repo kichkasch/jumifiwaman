@@ -7,6 +7,7 @@ from firmware import *
 
 class User(db.Model):
     googleUser = users.User
+    role = db.StringProperty(choices=set(["read", "add", "delete"]))
     
 class Update(db.Model):
     date = db.DateTimeProperty(auto_now_add=True)
