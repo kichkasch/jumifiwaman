@@ -1,4 +1,6 @@
-#
+# JuMiFiWaMan
+# by Michael Pilgermann (kichkasch@gmx.de)
+# GPLv3
 import os
 from google.appengine.ext.webapp import template
 import cgi
@@ -48,6 +50,27 @@ class MainPage(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'index.html')
         self.response.out.write(template.render(path, template_values))
 
+class TestPage(webapp.RequestHandler):
+    def get(self):
+        template_values = {}
+        path = os.path.join(os.path.dirname(__file__), 'test.html')
+        self.response.out.write(template.render(path, template_values))        
+
+#class GetDevices(webapp.RequestHandler):
+#    def get(self):
+#        device_query = Device.all().order('-name')
+#        devices = device_query.fetch(10)
+#        groupQuery = DeviceGroup.all().order('-name')
+#        groups = groupQuery.fetch(10)
+#        manQuery = Manufactorer.all().order('-name')
+#        mans = manQuery.fetch(10)     
+#        template_values = {
+#            'groups': groups, 
+#            'devices': devices,
+#            'manufactorers': mans, 
+#            }
+#        path = os.path.join(os.path.dirname(__file__), 'tab_devices.html')
+#        self.response.out.write(template.render(path, template_values))
 
 class AddDevice(webapp.RequestHandler):
     def post(self):
@@ -86,7 +109,9 @@ class RemoveManufactoer(webapp.RequestHandler):
 def main():
     application = webapp.WSGIApplication(
                                      [('/', MainPage),
+                                      ('/test', TestPage), 
                                       ('/newDevice', AddDevice), 
+#                                      ('/getDevices', GetDevices), 
                                       ('/newDeviceGroup', AddDeviceGroup), 
                                       ('/newManufactorer', AddManufactorer), 
                                       ('/removeManufactorer', RemoveManufactoer)],

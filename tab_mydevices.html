@@ -1,0 +1,41 @@
+    
+    <hr/>
+    <h2>My Devices</h2>
+
+<div id="demo">
+
+<table class="display" id="myDevicesTable">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Identifier</th>
+			<th>Manufactorer</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Row 1 Data 1</td>
+			<td>Row 1 Data 2</td>
+			<td>etc</td>
+		</tr>
+		<tr>
+			<td>Row 2 Data 1</td>
+			<td>Row 2 Data 2</td>
+			<td>etc</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+    <script type="text/javascript" language="javascript" src="http://www.datatables.net/release-datatables/media/js/jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="http://www.datatables.net/release-datatables/media/js/jquery.dataTables.js"></script>   
+    <script type='text/javascript'>
+    var $jq14 = jQuery.noConflict(true);
+    </script>
+
+
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$jq14('#myDevicesTable').dataTable();
+			} );
+		</script>    

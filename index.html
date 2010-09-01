@@ -3,23 +3,38 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
 	<!-- tab styling -->
 	<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/css/tabs.css" />
-
-	<!-- include the Tools -->
-	<script src="http://cdn.jquerytools.org/1.2.4/full/jquery.tools.min.js"></script>
-	<!-- standalone page styling (can be removed) -->
 	<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/standalone.css"/>	
 	<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/overlay-apple.css"/>
     
+	<!-- include the jQuery Tools -->
+	<script src="http://cdn.jquerytools.org/1.2.4/full/jquery.tools.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="http://www.datatables.net/release-datatables/media/css/demo_table.css"/>
+    <link rel="stylesheet" type="text/css" href="http://www.datatables.net/release-datatables/media/css/demo_page.css"/>
+    
+<script type="text/javascript">
+$(document).ready(function(){
+	//hide the all of the element with class msg_body
+	$(".msg_body").hide();
+	//toggle the componenet with class msg_body
+	$(".msg_head").click(function(){
+		$(this).next(".msg_body").slideToggle(600);
+	});
+    
+});
+
+</script>
+
+
+
     <title>JuMi Firmware Manager</title>
   </head>
 
   <body>
-  <p>
-  <table border="0" width="100%"><tr>
+  <p><table class='myHeading' width="100%"><tr >
   <td width="10"/>
     <td >
-    Current user is:
-    {{ userText }} </td>
+    Current user is: {{ userText }} </td>
     
     <td width="20%" align="right">
     {% if profileText %}
@@ -30,244 +45,23 @@
      
       <td width="15%" align="right"><button rel="#apple" type="button">Help</button></td>
   <td width="10"/>
+    </tr></table></p>
 
-    </tr></table>
-    </p>
-<!-- each overlay is initialized with this single JavaScript call -->
-<script>
-$(function() {
-		$("button[rel]").overlay({mask: '#000', effect: 'apple'});
-});
-</script>
-
-    
 <ul class="tabs">
 	<li><a href="#first">My Devices</a></li>
-	<li><a href="#second">Device Manager</a></li>
+	<li><a href="#second">Device Manager</a></li> 
 	<li><a href="#third">Firmware Manager</a></li>
 </ul>
 
 <div class="panes">
-<div>My devices. Coming soon ...<a href="#third">open third tab</a></div>
-<div>
-    
-    <hr/>
-    <h2>Devices</h2>
-    <ul>
-    {% for device in devices %}
-      <li>{{ device.name|escape }} ({{ device.deviceID}})
-    {% if device.group %}
-      <ul><li>type: {{ device.group.name }}</li></ul>
-    {% endif %}
-    {% if device.manufactorer %}
-      <ul><li>manufactorer: {{device.manufactorer.name}}</li></ul>
-    {% endif %}
-    </li>
-    {% endfor %}
-    </ul>
-
-    
-<p>
-	<button class="modalInput" rel="#promptDevice">New Device</button>
-</p>    
-<div class="modal" id="promptDevice">
-	<h2>Add Device</h2>
-	<p>
-		Please provide details for the new device.
-	</p>
-    <form action="/newDevice" method="post">
-      <p>Name<br/><input name="deviceName"></input></p>
-      <p>Serial number<br/><input name="deviceID"></input></p>
-      <p>Device group<br/><select name="deviceGroup" size="1">
-      {% for group in groups %}
-      <option>{{group.name}}</option>
-      {% endfor %}
-      </select></p>
-      <p>Manufactorer<br/><select name="manufactorer" size="1">
-      {% for man in manufactorers%}
-      <option>{{man.name}}</option>
-      {% endfor %}
-      </select> </p>
-     <p><button type="submit" > OK </button>
-    <button type="button" class="close"> Cancel </button></p>
-    </form>    
-</div>        
-    
-
-    <hr/>
-    <h2>Device groups</h2>    
-    Known Groups
-    <ul>
-    {% for group in groups %}
-    <li> {{ group.name }} </li>
-    {% endfor %}
-    </ul>
-    
-<p>
-	<button class="modalInput" rel="#promptGroup">New Device Group</button>
-</p>    
-<div class="modal" id="promptGroup">
-	<h2>Add Device Group</h2>
-	<p>
-		Please provide details for the new device group.
-	</p>
-    <form action="/newDeviceGroup" method="post">
-      <p>Name<br/><input name="groupName"></input></p>
-     <p><button type="submit" > OK </button>
-    <button type="button" class="close"> Cancel </button></p>
-    </form>    
-</div>    
-    
-    
-
-    <hr/>
-    <h2>Manufactorers</h2>
-    Known Manufactorers
-    <ul>
-    {% for man in manufactorers %}
-    <li> {{ man.name }} (<a href="{{ man.website }}">web site</a>)</li>
-    {% endfor %}
-    </ul>
-    
-<p>
-	<button class="modalInput" rel="#promptMan">New Manufactorer</button>
-</p>    
-<div class="modal" id="promptMan">
-	<h2>Add Manufactorer</h2>
-	<p>
-		Please provide details for new manufactorer entry.
-	</p>
-    <form action="/newManufactorer" method="post">
-      <p>Name<br/><input name="manName"></input></p>
-      <p>Home page<br/><input name="manWebsite"></input></p>
-     <p><button type="submit" > OK </button>
-    <button type="button" class="close"> Cancel </button></p>
-    </form>    
-</div>
-    
-
-    </div>
-	<div>Firmware Manager ... coming soon ...</div>
+<div>{% include "tab_mydevices.html" %}</div>
+<div>{% include "tab_devices.html" %}</div>
+<div>{% include "tab_firmware.html" %}</div>
 </div> <!--panes -->
-  
-
-<div class="apple_overlay" id="apple">
-	<h2 style="margin:0px">JuMi Firmware Manager - Help</h2>
-
-	<img src="http://static.flowplayer.org/img/title/eye192.png" style="float: left; margin:0px 20px 0 0;" />
-
-	<p>
-
-		<strong>Introduction</strong> <br/>
-JuMi Firmware Manager (JuMiFiWaMan) is a web-based tool allowing you to
-comfortably manage the update management process of firmwares for your
-(multimedia) devices (home).</p>
-
-<p>Background is the steadily increasing dependence of up-to-date firmware of
-such multimedia devices. In order to get around bugs (which came with the
-shipped product) or to make use of latest features, the latest firmware needs
-to be installed. As the number of devices grows, it becomes quite a task to
-check for updates of firmware of all these devices on a frequent basis.</p>
-
-<p>JuMiFiWaMan supports you exactly on this process. A database in the
-background is holding information about many device (perspectively at least)
-and firmware versions available for them. You only need to assemble your set
-of device (by choosing from this repository) - and (again perspectively) you
-get informed whenever new versions are released - be it on the web side or
-via email notification service.
-	</p>
-	
-	<p>
-		<strong>My Devices</strong><br/>
-This section enables you to assemble and manage your own set of devices. It
-also provides an overview on current state of available and performed updates
-as well as it supports reports on histories for updates.
-        
-	</p>
-	
-	<p>
-		<strong>Device Manager</strong><br/>
-With this section everybody can take care of an exhaustive set of devices
-being covered with JuMiFiWaMan. All you need to provide is an unique id
-number for each device and a name as well as the name of the manufacturer. On
-top, a grouping of devices (e.g. all DVD-Players etc.) is supported.
-
-        
-	</p>
-
-    <p><strong>Firmware Manager</strong>
-In this section the up-to-date information for new firmware releases is to be
-maintained. In the beginning, this will exclusively be a community based
-approach (manually check for updates and insert information) - later on
-(semi) automatic agents shall take care of this update process.</p>
-
-	<p style="color:#666">
-Copyright with <a href="http://www.kichkasch.de">Michael Pilgermann</a>; license is <a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>, 
-<a href="mailto:kichkasch@gmx.de">email me</a> in case of questions. Thanks to <a href="http://code.google.com/appengine/">Google App Engine </a>
-for free web app hosting and framework as well as <a href="http://static.flowplayer.org/tools/index.html">jQueryTOOLS</a> for Javascript jQuery library.
-
-	</p>
-</div>
-  
-  
-<script>
-// perform JavaScript after the document is scriptable.
-$(function() {
-	// setup ul.tabs to work as tabs for each div directly under div.panes
-	$("ul.tabs").tabs("div.panes > div", { history: true });
-});
 
 
+{% include "help.html" %}
+{% include "scripts.html" %}
 
-// What is $(document).ready ? See: http://flowplayer.org/tools/documentation/basics.html#document_ready
-$(document).ready(function() {
-
-var triggers = $(".modalInput").overlay({
-
-	// some mask tweaks suitable for modal dialogs
-	mask: {
-		color: '#ebecff',
-		loadSpeed: 200,
-		opacity: 0.9
-	},
-
-	closeOnClick: false
-});
-
-
-var buttons = $("#yesno button").click(function(e) {
-	
-	// get user input
-	var yes = buttons.index(this) === 0;
-
-	// do something with the answer
-	triggers.eq(0).html("You clicked " + (yes ? "yes" : "no"));
-});
-
-
-$("#prompt form").submit(function(e) {
-
-	// close the overlay
-	triggers.eq(1).overlay().close();
-
-	// get user input
-	var input = $("input", this).val();
-
-	// do something with the answer
-	triggers.eq(1).html(input);
-
-	// do not submit the form
-	return e.preventDefault();
-});
-
-});
-
-
-
-</script>
-
-  
-    
-    
   </body>
 </html>

@@ -1,0 +1,104 @@
+    
+    <hr/>
+    <h2>Devices</h2>
+    <ul>
+    {% for device in devices %}
+      <li>{{ device.name|escape }} ({{ device.deviceID}})
+    {% if device.group %}
+      <ul><li>type: {{ device.group.name }}</li></ul>
+    {% endif %}
+    {% if device.manufactorer %}
+      <ul><li>manufactorer: {{device.manufactorer.name}}</li></ul>
+    {% endif %}
+    </li>
+    {% endfor %}
+    </ul>
+
+    
+<p>
+	<button class="modalInput" rel="#promptDevice">New Device</button>
+</p>    
+<div class="modal" id="promptDevice">
+	<h2>Add Device</h2>
+	<p>
+		Please provide details for the new device.
+	</p>
+    <form action="/newDevice" method="post">
+      <p>Name<br/><input name="deviceName"></input></p>
+      <p>Serial number<br/><input name="deviceID"></input></p>
+      <p>Device group<br/><select name="deviceGroup" size="1">
+      {% for group in groups %}
+      <option>{{group.name}}</option>
+      {% endfor %}
+      </select></p>
+      <p>Manufactorer<br/><select name="manufactorer" size="1">
+      {% for man in manufactorers%}
+      <option>{{man.name}}</option>
+      {% endfor %}
+      </select> </p>
+     <p><button type="submit" > OK </button>
+    <button type="button" class="close"> Cancel </button></p>
+    </form>    
+</div>        
+
+
+<p class="msg_head">Configure device groups and Manufactorers ... </p>
+		<div class="msg_body">    
+
+<table width="100%"><tr>
+<td width="5%"/>
+        
+<td width="45%">
+    <h2>Device groups</h2>    
+    Known Groups
+    <ul>
+    {% for group in groups %}
+    <li> {{ group.name }} </li>
+    {% endfor %}
+    </ul>
+    
+<p>
+	<button class="modalInput" rel="#promptGroup">New Device Group</button>
+</p>    
+<div class="modal" id="promptGroup">
+	<h2>Add Device Group</h2>
+	<p>
+		Please provide details for the new device group.
+	</p>
+    <form action="/newDeviceGroup" method="post">
+      <p>Name<br/><input name="groupName"></input></p>
+     <p><button type="submit" > OK </button>
+    <button type="button" class="close"> Cancel </button></p>
+    </form>    
+</div>    
+</td>    
+    
+<td width="45%">
+    <h2>Manufactorers</h2>
+    Known Manufactorers
+    <ul>
+    {% for man in manufactorers %}
+    <li> {{ man.name }} (<a href="{{ man.website }}">web site</a>)</li>
+    {% endfor %}
+    </ul>
+    
+<p>
+	<button class="modalInput" rel="#promptMan">New Manufactorer</button>
+</p>    
+<div class="modal" id="promptMan">
+	<h2>Add Manufactorer</h2>
+	<p>
+		Please provide details for new manufactorer entry.
+	</p>
+    <form action="/newManufactorer" method="post">
+      <p>Name<br/><input name="manName"></input></p>
+      <p>Home page<br/><input name="manWebsite"></input></p>
+     <p><button type="submit" > OK </button>
+    <button type="button" class="close"> Cancel </button></p>
+    </form>    
+</div>
+</td>
+
+<td width="5%"/>
+</tr></table>
+</div>

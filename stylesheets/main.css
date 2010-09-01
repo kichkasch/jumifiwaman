@@ -36,6 +36,14 @@ body {
 	background-color:#fff;
 }
 
+.myHeading {
+    background-color:#BBBBBB;
+    outline: 2px groove darkgrey; 
+    padding-bottom:4px; 
+    margin:0px;
+    font-size:14px;
+}
+
 #custom {
 		background-image:url(http://static.flowplayer.org/img/commerce/box-512.png);
 		width:512px;
@@ -65,3 +73,23 @@ body {
 		width:600px;		
 		height:250px;
 	}
+
+    
+    
+.msg_list {
+	margin: 0px;
+	padding: 0px;
+	width: 383px;
+}
+.msg_head {
+    background-color:#BBBBBB;
+    outline: 2px groove darkgrey; 
+	padding: 5px 10px;
+	cursor: pointer;
+	position: relative;
+	margin:1px;
+}
+.msg_body {
+	padding: 5px 10px 15px;
+	background-color:#F4F4F8;
+}
