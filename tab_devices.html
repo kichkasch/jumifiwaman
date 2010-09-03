@@ -1,18 +1,37 @@
 <div class="insideTab">   
-    <ul>
-    {% for device in devices %}
-      <li>{{ device.name|escape }} ({{ device.deviceID}})
-    {% if device.group %}
-      <ul><li>type: {{ device.group.name }}</li></ul>
-    {% endif %}
-    {% if device.manufactorer %}
-      <ul><li>manufactorer: {{device.manufactorer.name}}</li></ul>
-    {% endif %}
-    </li>
-    {% endfor %}
-    </ul>
 
+<h3 align="center">Devices</h3>
     
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="devicesTable">
+	<thead>
+		<tr>
+            <th>Unique Identifier</th>
+			<th>Name of Device</th>
+            <th>Device Group</th>
+            <th>Manufactorer</th>
+		</tr>
+	</thead>
+	<tbody>
+{% for device in devices %}  
+		<tr class="gradeA">
+			<td>{{ device.deviceID}}</td>
+			<td>{{ device.name|escape }}</td>
+            <td>{{ device.group.name }}</td>
+            <td>{{device.manufactorer.name}}</td>
+		</tr>
+{% endfor %}
+	</tbody>
+	<tfoot>
+		<tr>
+            <th>Unique Identifier</th>
+			<th>Name of Device</th>
+            <th>Device Group</th>
+            <th>Manufactorer</th>
+		</tr>
+	</tfoot>
+</table>
+
+
 <p>
 	<button class="modalInput" rel="#promptDevice">New Device</button>
 </p>    
@@ -51,7 +70,7 @@
 <div class="insideTab"width>   
     <h3 align="center">Device groups</h3>
     
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="devicesTable">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="deviceGroupsTable">
 	<thead>
 		<tr>
 			<th>Name of Device Group</th>
