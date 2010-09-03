@@ -31,10 +31,23 @@
 	</tfoot>
 </table>
 
-
 <p>
-	<button class="modalInput" rel="#promptDevice">New Device</button>
+	<button id="buttonDevice" type="button" class="ui-state-default ui-corner-all">New Device</button>
 </p>    
+
+<div id="dialogDevice" title="Add Device">
+	<p>
+		Please provide details for the new device.
+	</p>
+    <form>
+    <fieldset>
+      <label for="deviceId">Unique Identifier</label>
+      <input type="text" name="deviceId" id="deviceId" class="text ui-widget-content ui-corner-all" />
+      <label for="deviceName">Name</label>
+      <input type="text" name="deviceName" id="deviceName" class="text ui-widget-content ui-corner-all" />
+    </fieldset>
+    </form>    
+</div>   
 <!-- <div class="modal" id="promptDevice">
 	<h2>Add Device</h2>
 	<p>
