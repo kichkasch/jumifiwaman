@@ -1,32 +1,16 @@
 <html>
 <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-	<!-- tab styling -->
-	<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/css/tabs.css" />
-	<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/standalone.css"/>	
-	<link rel="stylesheet" type="text/css" href="http://static.flowplayer.org/tools/css/overlay-apple.css"/>
-    
-	<!-- include the jQuery Tools -->
-	<script src="http://cdn.jquerytools.org/1.2.4/full/jquery.tools.min.js"></script>
     
     <link rel="stylesheet" type="text/css" href="http://www.datatables.net/release-datatables/media/css/demo_table.css"/>
     <link rel="stylesheet" type="text/css" href="http://www.datatables.net/release-datatables/media/css/demo_page.css"/>
     
-<script type="text/javascript">
-$(document).ready(function(){
-	//hide the all of the element with class msg_body
-	$(".msg_body").hide();
-	//toggle the componenet with class msg_body
-	$(".msg_head").click(function(){
-		$(this).next(".msg_body").slideToggle(600);
-	});
+    <link type="text/css" href="stylesheets/jquery-ui-1.8.4.custom.css" rel="Stylesheet" />	
+    <script type="text/javascript" src="scripts/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui-1.8.4.custom.min.js"></script>
+    <script type="text/javascript" language="javascript" src="http://www.datatables.net/release-datatables/media/js/jquery.dataTables.js"></script>   
+
     
-});
-
-</script>
-
-
-
     <title>JuMi Firmware Manager</title>
   </head>
 
@@ -38,30 +22,30 @@ $(document).ready(function(){
     
     <td width="20%" align="right">
     {% if profileText %}
-     <button>{{profileText}}</button>
+     <button type="button" class="ui-state-default ui-corner-all">{{profileText}}</button>
      {% endif %}
-    <button onclick="location.href='{{url}}'">{{urlText}}</button>
+    <button onclick="location.href='{{url}}'" type="button" class="ui-state-default ui-corner-all">{{urlText}}</button>
      </td>
      
-      <td width="15%" align="right"><button rel="#apple" type="button">Help</button></td>
+      <td width="15%" align="right"><button id="buttonHelp" type="button" class="ui-state-default ui-corner-all">Help</button></td>
   <td width="10"/>
     </tr></table></p>
 
-<ul class="tabs">
-	<li><a href="#first">My Devices</a></li>
-	<li><a href="#second">Device Manager</a></li> 
-	<li><a href="#third">Firmware Manager</a></li>
+<div id="tabs">
+<ul>
+	<li><a href="#firsttab">My Devices</a></li>
+	<li><a href="#secondtab">Device Manager</a></li> 
+	<li><a href="#thirdtab">Firmware Manager</a></li>
 </ul>
 
-<div class="panes">
-<div>{% include "tab_mydevices.html" %}</div>
-<div>{% include "tab_devices.html" %}</div>
-<div>{% include "tab_firmware.html" %}</div>
-</div> <!--panes -->
+<div id="firsttab">{% include "tab_mydevices.html" %}</div>
+<div id="secondtab">{% include "tab_devices.html" %}</div>
+<div id="thirdtab">{% include "tab_firmware.html" %}</div>
+</div> <!--tabs -->
 
-
+       
 {% include "help.html" %}
-{% include "scripts.html" %}
+{% include "scripts.html" %}  
 
   </body>
 </html>

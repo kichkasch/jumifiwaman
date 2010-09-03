@@ -82,29 +82,25 @@ class AddDevice(webapp.RequestHandler):
         query = Manufactorer.all().filter('name = ', self.request.get('manufactorer'))
         device.manufactorer = query.fetch(1)[0]
         device.put()
-        self.redirect('/#second')
 
 class AddDeviceGroup(webapp.RequestHandler):
     def post(self):
         group = DeviceGroup()
         group.name = self.request.get('groupName')
         group.put()        
-        self.redirect('/#second')
 
 class AddManufactorer(webapp.RequestHandler):
     def post(self):
         man = Manufactorer()
         man.name = self.request.get('manName')
         man.website = self.request.get('manWebsite')
-        man.put()        
-        self.redirect('/#second')
+        man.put()
 
 class RemoveManufactoer(webapp.RequestHandler):
     def post(self):
         query = Manufactorer.all().filter('name = ', self.request.get('manufactorer'))
         manufactorer = query.fetch(1)[0]
         manufactorer.delete()
-        self.redirect('/#second')
 
 def main():
     application = webapp.WSGIApplication(

@@ -1,6 +1,4 @@
-    
-    <hr/>
-    <h2>Devices</h2>
+<div class="insideTab">   
     <ul>
     {% for device in devices %}
       <li>{{ device.name|escape }} ({{ device.deviceID}})
@@ -18,7 +16,7 @@
 <p>
 	<button class="modalInput" rel="#promptDevice">New Device</button>
 </p>    
-<div class="modal" id="promptDevice">
+<!-- <div class="modal" id="promptDevice">
 	<h2>Add Device</h2>
 	<p>
 		Please provide details for the new device.
@@ -39,66 +37,110 @@
      <p><button type="submit" > OK </button>
     <button type="button" class="close"> Cancel </button></p>
     </form>    
-</div>        
+</div>   -->      
 
-
-<p class="msg_head">Configure device groups and Manufactorers ... </p>
-		<div class="msg_body">    
-
-<table width="100%"><tr>
-<td width="5%"/>
-        
+<table width="100%" border="0" valign="center"><tr>
+<td width="4%"/>
 <td width="45%">
-    <h2>Device groups</h2>    
-    Known Groups
-    <ul>
-    {% for group in groups %}
-    <li> {{ group.name }} </li>
-    {% endfor %}
-    </ul>
+
+<div class="fullWidthLink"><a href="#" id="buttonDetailToggler">Configure device groups ...</a></div>
+		
+<div class="toggler" width="100%">    
+<div id="deviceDetailToggler" class="ui-widget-content ui-corner-all" width>
+
+<div class="insideTab"width>   
+    <h3 align="center">Device groups</h3>
+    
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="devicesTable">
+	<thead>
+		<tr>
+			<th>Name of Device Group</th>
+		</tr>
+	</thead>
+	<tbody>
+{% for group in groups %}    
+		<tr class="gradeA">
+			<td>{{ group.name }}</td>
+		</tr>
+{% endfor %}
+	</tbody>
+	<tfoot>
+		<tr>
+			<th>Name of Device Group</th>
+		</tr>
+	</tfoot>
+</table>
+
     
 <p>
-	<button class="modalInput" rel="#promptGroup">New Device Group</button>
+	<button id="buttonDeviceGroup" type="button" class="ui-state-default ui-corner-all">New Device Group</button>
 </p>    
-<div class="modal" id="promptGroup">
-	<h2>Add Device Group</h2>
+<div id="dialogDevGroup" title="Add Device Group">
 	<p>
 		Please provide details for the new device group.
 	</p>
-    <form action="/newDeviceGroup" method="post">
-      <p>Name<br/><input name="groupName"></input></p>
-     <p><button type="submit" > OK </button>
-    <button type="button" class="close"> Cancel </button></p>
+    <form>
+    <fieldset>
+      <label for="groupName">Name</label>
+      <input type="text" name="groupName" id="groupName" class="text ui-widget-content ui-corner-all" />
+    </fieldset>
     </form>    
 </div>    
-</td>    
+   
+</div></div></div>
+</td><td width="4%"/><td width="45%">
     
-<td width="45%">
-    <h2>Manufactorers</h2>
-    Known Manufactorers
-    <ul>
-    {% for man in manufactorers %}
-    <li> {{ man.name }} (<a href="{{ man.website }}">web site</a>)</li>
+<div class="fullWidthLink"><a href="#" id="buttonDetailManToggler">Configure Manufactorers ...</a></div>
+<div class="toggler" width="100%">    
+<div id="manDetailToggler" class="ui-widget-content ui-corner-all" width>
+
+<div class="insideTab"width>       
+    
+    <h3>Manufactorers</h3>
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="manufactorersTable">
+	<thead>
+		<tr>
+			<th>Name of Manufactorer</th>
+            <th>Home page</th>
+		</tr>
+	</thead>
+	<tbody>
+    {% for man in manufactorers %}  
+		<tr class="gradeA">
+			<td> {{ man.name }} </td>
+            <td> {{ man.website }}</td>
+		</tr>
     {% endfor %}
-    </ul>
-    
+	</tbody>
+	<tfoot>
+		<tr>
+			<th>Name of Manufactorer</th>
+            <th>Home page</th>
+		</tr>
+	</tfoot>
+</table>
+
 <p>
-	<button class="modalInput" rel="#promptMan">New Manufactorer</button>
+	<button id="buttonMan" type="button" class="ui-state-default ui-corner-all">New Manufactorer</button>
 </p>    
-<div class="modal" id="promptMan">
-	<h2>Add Manufactorer</h2>
-	<p>
-		Please provide details for new manufactorer entry.
-	</p>
-    <form action="/newManufactorer" method="post">
-      <p>Name<br/><input name="manName"></input></p>
-      <p>Home page<br/><input name="manWebsite"></input></p>
-     <p><button type="submit" > OK </button>
-    <button type="button" class="close"> Cancel </button></p>
+<div id="dialogMan" title="Add Manufactorer">
+	<p>Please provide details for new manufactorer entry.</p>
+    <form>
+    </fieldset>
+        <label for="manName">Name</label>
+        <input type="text" name="manName" id="manName" class="text ui-widget-content ui-corner-all" />
+        <label for="manWebsite">Home page</label>
+        <input type="text" name="manWebsite" id="manWebsite" class="text ui-widget-content ui-corner-all" />
+    </fieldset>
     </form>    
 </div>
-</td>
 
-<td width="5%"/>
-</tr></table>
+
 </div>
+</div>
+</div>
+
+</td><td width="3%"/></tr></table>
+
+</div> <!-- insideTab -->

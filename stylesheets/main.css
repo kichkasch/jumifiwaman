@@ -1,95 +1,49 @@
 body {
-  font-family: Verdana, Helvetica, sans-serif;
-  background-color: #DDDDDD;
-}
-
-.modal {
-		background-color:#fff;
-		display:none;
-		width:350px;
-		padding:15px;
-		text-align:left;
-		border:2px solid #333;
-	
-		opacity:0.8;
-		-moz-border-radius:6px;
-		-webkit-border-radius:6px;
-		-moz-box-shadow: 0 0 50px #ccc;
-		-webkit-box-shadow: 0 0 50px #ccc;
-	}
-	
-.modal h2 {
-		background:url(/img/global/info.png) 0 50% no-repeat;
-		margin:0px;
-		padding:10px 0 10px 45px;
-		border-bottom:1px solid #333;
-		font-size:20px;
-	}
-
-.panes div {
-	display:none;		
-	padding:15px 10px;
-	border:1px solid #999;
-	border-top:0;
-	
-	font-size:14px;
-	background-color:#fff;
+ padding:50px 80px;
+ font-family:"Lucida Grande","bitstream vera sans","trebuchet ms",sans-serif,verdana;
+ background-color: #DDDDDD;
+ font-size:12px;
 }
 
 .myHeading {
     background-color:#BBBBBB;
-    outline: 2px groove darkgrey; 
-    padding-bottom:4px; 
+    outline: 2px groove darkgrey;
+    padding-bottom:4px;
     margin:0px;
     font-size:14px;
 }
 
-#custom {
-		background-image:url(http://static.flowplayer.org/img/commerce/box-512.png);
-		width:512px;
-		height:531px;
-		padding:0px;
-	}
-	
-#custom div.close {
-		right:-15px;
-		top:-10px;
-	}
-	
-#petrol {
-		background-image:url(http://static.flowplayer.org/img/overlay/petrol.png);
-		color:#fff;
-	}
-	
-#apple {
-        background-image:url(http://static.flowplayer.org/img/overlay/apple.png);
-		color:#fff;
-		padding:50px 70px;
-		width:700px;		
-		height:250px;    
-	}
+.toggler { width: 500px; height: 200px; }
+#button { padding: .5em 1em; text-decoration: none; }
+#effect { width: 240px; height: 135px; padding: 0.4em; position: relative; }
+#effect h3 { margin: 0; padding: 0.4em; text-align: center; }
 
-#apple.overlay {
-		width:600px;		
-		height:250px;
-	}
+.fullWidthLink{
+    background-color: #333333;
+    width: 100%;
+    font-size:18px;
+    font-weight:bold;
+    outline: 2px groove;
+    text-align: center;
+}
+.fullWidthLink A:link {text-decoration: none; color: #FFA500;}
+.fullWidthLink A:visited {text-decoration: none; color: #FFA500;}
+.fullWidthLink A:active {text-decoration: none; color: #FFA500;}
+.fullWidthLink A:hover {text-decoration: none; color: #6495ED;}
 
-    
-    
-.msg_list {
-	margin: 0px;
-	padding: 0px;
-	width: 383px;
+.insideTab{
+    background-color: #AAAAAA;
+    width: 90%;
+    margin: 2%;
+    padding:3%;
 }
-.msg_head {
-    background-color:#BBBBBB;
-    outline: 2px groove darkgrey; 
-	padding: 5px 10px;
-	cursor: pointer;
-	position: relative;
-	margin:1px;
-}
-.msg_body {
-	padding: 5px 10px 15px;
-	background-color:#F4F4F8;
-}
+
+
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; margin-top:25px; }
+    h1 { font-size: 1.2em; margin: .6em 0; }
+    div#users-contain { width: 350px; margin: 20px 0; }
+    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }

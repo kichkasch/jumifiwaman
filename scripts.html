@@ -1,57 +1,98 @@
-<script>
-// perform JavaScript after the document is scriptable.
-$(function() {
-	// setup ul.tabs to work as tabs for each div directly under div.panes
-	$("ul.tabs").tabs("div.panes > div", { history: true });
-});
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#myDevicesTable1').dataTable();
+    } );
 
+    $(document).ready(function() {
+        $('#devicesTable').dataTable( {
+		"sPaginationType": "full_numbers"
+	});
+    } );
 
+    $(document).ready(function() {
+        $('#manufactorersTable').dataTable( {
+		"sPaginationType": "full_numbers"
+	});
+    } );
+    
+	$(function() {
+          $("#buttonHelp").click(function() {
+            $("#dialog-help").dialog({
+                width: 800,
+                modal: true,
+                draggable: false ,
+                closeText: 'show',
+                autoOpen: true,
+                buttons: { "Close": function() { $(this).dialog("close"); } },
+            });
+          });
+      
+        $("#buttonDetailToggler").click(function() {
+            $("#deviceDetailToggler").toggle("blind",{},500);
+        return false;
+        });
+        $("#buttonDetailManToggler").click(function() {
+            $("#manDetailToggler").toggle("blind",{},500);
+        return false;
+        });
+                
+        $('#buttonMan').click(function() {
+            $('#dialogMan').dialog({
+                autoOpen: true,
+                width: 350,
+                modal: true,
+                draggable: false ,
+                buttons: {
+                    'Create this Manufactorer': function() {
+                        $('#manufactorersTable tbody').append('<tr class="gradeA">' + '<td>' + $("#manName").val() + '</td>'+ '<td>' + $("#manWebsite").val() + '</td>' + '</tr>'); 
+                        $.post("/newManufactorer",{ manName: $("#manName").val(), manWebsite: $("#manWebsite").val()});
+                        $(this).dialog('close');
+                    },
+                    Cancel: function() {
+                        $(this).dialog('close');
+                    }
+                },
+                close: function() {
+                    allFields.val('').removeClass('ui-state-error');
+                }
+            });
+        });
 
-// What is $(document).ready ? See: http://flowplayer.org/tools/documentation/basics.html#document_ready
-$(document).ready(function() {
+        $('#buttonDeviceGroup').click(function() {
+            $('#dialogDevGroup').dialog({
+                autoOpen: true,
+                width: 350,
+                modal: true,
+                draggable: false ,
+                buttons: {
+                    'Create this Device Group': function() {
+                        $('#devicesTable tbody').append('<tr class="gradeA">' + '<td>' + $("#groupName").val() + '</td>' + '</tr>'); 
+                        $.post("/newDeviceGroup",{ groupName: $("#groupName").val()});
+                        $(this).dialog('close');
+                    },
+                    Cancel: function() {
+                        $(this).dialog('close');
+                    }
+                },
+                close: function() {
+                    allFields.val('').removeClass('ui-state-error');
+                }
+            });
+        });
+    
 
-var triggers = $(".modalInput").overlay({
+	});
+    
+    
+    $('#dialog-help').hide();
+    $('#date').datepicker();    
+    $("#dialog-help").dialog("destroy");
+    $("#deviceDetailToggler").hide();
+    $("#manDetailToggler").hide();
+    $("#dialogMan").hide();
+    $("#dialogDevGroup").hide();
 
-	// some mask tweaks suitable for modal dialogs
-	mask: {
-		color: '#ebecff',
-		loadSpeed: 200,
-		opacity: 0.9
-	},
+    $("#tabs").tabs();
 
-	closeOnClick: false
-});
+	</script>
 
-
-var buttons = $("#yesno button").click(function(e) {
-	
-	// get user input
-	var yes = buttons.index(this) === 0;
-
-	// do something with the answer
-	triggers.eq(0).html("You clicked " + (yes ? "yes" : "no"));
-});
-
-
-$("#prompt form").submit(function(e) {
-
-	// close the overlay
-	triggers.eq(1).overlay().close();
-
-	// get user input
-	var input = $("input", this).val();
-
-	// do something with the answer
-	triggers.eq(1).html(input);
-
-	// do not submit the form
-	return e.preventDefault();
-});
-
-});
-
-$(function() {
-		$("button[rel]").overlay({mask: '#000', effect: 'apple'});
-});
-
-</script>
