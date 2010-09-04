@@ -18,24 +18,16 @@ body {
 #effect { width: 240px; height: 135px; padding: 0.4em; position: relative; }
 #effect h3 { margin: 0; padding: 0.4em; text-align: center; }
 
-.fullWidthLink{
-    background-color: #333333;
-    width: 100%;
-    font-size:18px;
-    font-weight:bold;
-    outline: 2px groove;
-    text-align: center;
+.fullWidth{
+    width: 100%;    
 }
-.fullWidthLink A:link {text-decoration: none; color: #FFA500;}
-.fullWidthLink A:visited {text-decoration: none; color: #FFA500;}
-.fullWidthLink A:active {text-decoration: none; color: #FFA500;}
-.fullWidthLink A:hover {text-decoration: none; color: #6495ED;}
+
 
 .insideTab{
     background-color: #AAAAAA;
-    width: 90%;
-    margin: 2%;
-    padding:3%;
+    width: 97%;
+    margin: 0.5%;
+    padding:1%;
 }
 
 

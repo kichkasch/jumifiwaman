@@ -1,24 +1,26 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#myDevicesTable1').dataTable();
-    } );
+        $("#accordion").accordion({
+            autoHeight: false,
+            collapsible: true,
+            active: false,
+        });        
 
-    $(document).ready(function() {
         $('#devicesTable').dataTable( {
-		"sPaginationType": "full_numbers"
-	});
-    } );
+            "sPaginationType": "full_numbers",
+            "bJQueryUI": true,
+        });
 
-    $(document).ready(function() {
         $('#deviceGroupsTable').dataTable( {
-		"sPaginationType": "full_numbers"
-	});
-    } );
+            "sPaginationType": "full_numbers",
+            "bJQueryUI": true,
+        });
 
-    $(document).ready(function() {
         $('#manufactorersTable').dataTable( {
-		"sPaginationType": "full_numbers"
-	});
+            "sPaginationType": "full_numbers",
+            "bJQueryUI": true,
+        });
     } );
     
 	$(function() {
@@ -35,11 +37,12 @@
       
         $("#buttonDetailToggler").click(function() {
             $("#deviceDetailToggler").toggle("blind",{},500);
-        return false;
+            return false;
         });
+        
         $("#buttonDetailManToggler").click(function() {
             $("#manDetailToggler").toggle("blind",{},500);
-        return false;
+            return false;
         });
                 
         $('#buttonMan').click(function() {
@@ -50,7 +53,8 @@
                 draggable: false ,
                 buttons: {
                     'Create this Manufactorer': function() {
-                        $('#manufactorersTable tbody').append('<tr class="gradeA">' + '<td>' + $("#manName").val() + '</td>'+ '<td>' + $("#manWebsite").val() + '</td>' + '</tr>'); 
+                        $('#manufactorersTable').dataTable().fnAddData( [$("#manName").val(),$("#manWebsite").val() ] );
+                        $('#devManName').append("<option>" + $("#manName").val() + "</option>");
                         $.post("/newManufactorer",{ 
                             manName: $("#manName").val(), manWebsite: $("#manWebsite").val()});
                         $(this).dialog('close');
@@ -73,7 +77,8 @@
                 draggable: false ,
                 buttons: {
                     'Create this Device Group': function() {
-                        $('#deviceGroupsTable tbody').append('<tr class="gradeA">' + '<td>' + $("#groupName").val() + '</td>' + '</tr>'); 
+                        $('#deviceGroupsTable').dataTable().fnAddData( [$("#groupName").val()] );
+                        $('#devDevGroup').append("<option>" + $("#groupName").val() + "</option>");
                         $.post("/newDeviceGroup",{ groupName: $("#groupName").val()});
                         $(this).dialog('close');
                     },
@@ -95,8 +100,12 @@
                 draggable: false ,
                 buttons: {
                     'Create this Device': function() {
-                        $('#devicesTable tbody').append('<tr class="gradeA">' + '<td>' + $("#deviceId").val() + '</td>' + '<td>' + $("#deviceName").val() + '</td>'+ '</tr>'); 
-                        $.post("/newDevice", {deviceName: $("#deviceName").val(), deviceID: $("#deviceId").val()});
+                        $('#devicesTable').dataTable().fnAddData( [$("#deviceId").val(),$("#deviceName").val(),$("#devDevGroup").val(),$("#devManName").val() ] );
+                        $.post("/newDevice", {
+                            deviceName: $("#deviceName").val(), 
+                            deviceID: $("#deviceId").val(), 
+                            deviceGroup:$("#devDevGroup").val(),
+                            manufactorer:$("#devManName").val() });
                         $(this).dialog('close');
                     },
                     Cancel: function() {
@@ -109,8 +118,7 @@
             });
         });
  	});
-    
-    
+
     $('#dialog-help').hide();
     $('#date').datepicker();    
     $("#dialog-help").dialog("destroy");

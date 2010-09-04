@@ -16,13 +16,13 @@ class MainPage(webapp.RequestHandler):
     
     def get(self):
         device_query = Device.all().order('-name')
-        devices = device_query.fetch(10)
+        devices = device_query.fetch(100)
         
         groupQuery = DeviceGroup.all().order('-name')
-        groups = groupQuery.fetch(10)
+        groups = groupQuery.fetch(100)
 
         manQuery = Manufactorer.all().order('-name')
-        mans = manQuery.fetch(10)
+        mans = manQuery.fetch(100)
 
         u = User()
         if users.get_current_user():

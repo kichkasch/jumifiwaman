@@ -1,7 +1,5 @@
 <div class="insideTab">   
 
-<h3 align="center">Devices</h3>
-    
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="devicesTable">
 	<thead>
 		<tr>
@@ -13,7 +11,7 @@
 	</thead>
 	<tbody>
 {% for device in devices %}  
-		<tr class="gradeA">
+		<tr >
 			<td>{{ device.deviceID}}</td>
 			<td>{{ device.name|escape }}</td>
             <td>{{ device.group.name }}</td>
@@ -45,44 +43,27 @@
       <input type="text" name="deviceId" id="deviceId" class="text ui-widget-content ui-corner-all" />
       <label for="deviceName">Name</label>
       <input type="text" name="deviceName" id="deviceName" class="text ui-widget-content ui-corner-all" />
-    </fieldset>
-    </form>    
-</div>   
-<!-- <div class="modal" id="promptDevice">
-	<h2>Add Device</h2>
-	<p>
-		Please provide details for the new device.
-	</p>
-    <form action="/newDevice" method="post">
-      <p>Name<br/><input name="deviceName"></input></p>
-      <p>Serial number<br/><input name="deviceID"></input></p>
-      <p>Device group<br/><select name="deviceGroup" size="1">
+      <p><label for="devDevGroup">Device Group</label><br/>
+      <select name="deviceGroup" id="devDevGroup" class="text ui-widget-content ui-corner-all fullWidth" size="1">
       {% for group in groups %}
       <option>{{group.name}}</option>
       {% endfor %}
       </select></p>
-      <p>Manufactorer<br/><select name="manufactorer" size="1">
+      <p><label for="devManName">Manufactorer</label><br/>
+      <select name="manufactorer" id="devManName" class="text ui-widget-content ui-corner-all fullWidth" size="1">
       {% for man in manufactorers%}
       <option>{{man.name}}</option>
       {% endfor %}
       </select> </p>
-     <p><button type="submit" > OK </button>
-    <button type="button" class="close"> Cancel </button></p>
+    </fieldset>
     </form>    
-</div>   -->      
+</div>      
 
-<table width="100%" border="0" valign="center"><tr>
-<td width="4%"/>
-<td width="45%">
+<div id="accordion">
+<h3><a href="#">Configure device groups ...</a></h3>
+<div> <!-- accord 1-->
 
-<div class="fullWidthLink"><a href="#" id="buttonDetailToggler">Configure device groups ...</a></div>
-		
-<div class="toggler" width="100%">    
-<div id="deviceDetailToggler" class="ui-widget-content ui-corner-all" width>
-
-<div class="insideTab"width>   
-    <h3 align="center">Device groups</h3>
-    
+<div class="insideTab">       
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="deviceGroupsTable">
 	<thead>
 		<tr>
@@ -91,7 +72,7 @@
 	</thead>
 	<tbody>
 {% for group in groups %}    
-		<tr class="gradeA">
+		<tr>
 			<td>{{ group.name }}</td>
 		</tr>
 {% endfor %}
@@ -117,19 +98,16 @@
       <input type="text" name="groupName" id="groupName" class="text ui-widget-content ui-corner-all" />
     </fieldset>
     </form>    
-</div>    
-   
-</div></div></div>
-</td><td width="4%"/><td width="45%">
-    
-<div class="fullWidthLink"><a href="#" id="buttonDetailManToggler">Configure Manufactorers ...</a></div>
-<div class="toggler" width="100%">    
-<div id="manDetailToggler" class="ui-widget-content ui-corner-all" width>
+</div>  
+</div><!-- insideTab-->
+</div><!-- accord 1-->
 
+
+
+<h3><a href="#">Configure Manufactorers ...</a></h3>
+<div><!-- accord 2-->
 <div class="insideTab"width>       
     
-    <h3>Manufactorers</h3>
-
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="manufactorersTable">
 	<thead>
 		<tr>
@@ -139,7 +117,7 @@
 	</thead>
 	<tbody>
     {% for man in manufactorers %}  
-		<tr class="gradeA">
+		<tr>
 			<td> {{ man.name }} </td>
             <td> {{ man.website }}</td>
 		</tr>
@@ -166,13 +144,11 @@
         <input type="text" name="manWebsite" id="manWebsite" class="text ui-widget-content ui-corner-all" />
     </fieldset>
     </form>    
-</div>
+</div> <!--dialogMan-->
 
+</div> <!-- insideTab-->
+</div> <!-- accord 2-->
 
-</div>
-</div>
-</div>
-
-</td><td width="3%"/></tr></table>
+</div> <!--accordion-->
 
 </div> <!-- insideTab -->
