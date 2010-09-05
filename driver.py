@@ -10,6 +10,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 
 from device import Device, DeviceGroup, Manufactorer
+from firmware import *
 from myuser import User
 
 class MainPage(webapp.RequestHandler):
@@ -23,6 +24,12 @@ class MainPage(webapp.RequestHandler):
 
         manQuery = Manufactorer.all().order('-name')
         mans = manQuery.fetch(100)
+
+        fwSourceQuery = FirmwareSource.all().order('-name')
+        fwSources = fwSourceQuery.fetch(100)
+        
+        fwStatusQuery = DevelopmentStatus.all().order('-name')
+        fwStatus = fwStatusQuery.fetch(100)
 
         u = User()
         if users.get_current_user():
@@ -45,6 +52,8 @@ class MainPage(webapp.RequestHandler):
             'url': url, 
             'urlText': url_linktext, 
             'profileText': profText, 
+            'firmwareSources': fwSources, 
+            'firmwareStatus': fwStatus, 
             }
 
         path = os.path.join(os.path.dirname(__file__), 'index.html')
@@ -55,22 +64,6 @@ class TestPage(webapp.RequestHandler):
         template_values = {}
         path = os.path.join(os.path.dirname(__file__), 'test.html')
         self.response.out.write(template.render(path, template_values))        
-
-#class GetDevices(webapp.RequestHandler):
-#    def get(self):
-#        device_query = Device.all().order('-name')
-#        devices = device_query.fetch(10)
-#        groupQuery = DeviceGroup.all().order('-name')
-#        groups = groupQuery.fetch(10)
-#        manQuery = Manufactorer.all().order('-name')
-#        mans = manQuery.fetch(10)     
-#        template_values = {
-#            'groups': groups, 
-#            'devices': devices,
-#            'manufactorers': mans, 
-#            }
-#        path = os.path.join(os.path.dirname(__file__), 'tab_devices.html')
-#        self.response.out.write(template.render(path, template_values))
 
 class AddDevice(webapp.RequestHandler):
     def post(self):
@@ -102,15 +95,29 @@ class RemoveManufactoer(webapp.RequestHandler):
         manufactorer = query.fetch(1)[0]
         manufactorer.delete()
 
+class AddFirmwareSource(webapp.RequestHandler):
+    def post(self):
+        fwSource = FirmwareSource()
+        fwSource.name = self.request.get('fwSourceName')
+        fwSource.put()
+
+class AddFirmwareStatus(webapp.RequestHandler):
+    def post(self):
+        fwStatus = DevelopmentStatus()
+        fwStatus.name = self.request.get('fwStatusName')
+        fwStatus.put()
+
 def main():
     application = webapp.WSGIApplication(
                                      [('/', MainPage),
                                       ('/test', TestPage), 
                                       ('/newDevice', AddDevice), 
-#                                      ('/getDevices', GetDevices), 
                                       ('/newDeviceGroup', AddDeviceGroup), 
                                       ('/newManufactorer', AddManufactorer), 
-                                      ('/removeManufactorer', RemoveManufactoer)],
+                                      ('/removeManufactorer', RemoveManufactoer), 
+                                      ('/newFirmwareSource', AddFirmwareSource), 
+                                      ('/newFirmwareStatus', AddFirmwareStatus), 
+                                      ],
                                      debug=True)
     run_wsgi_app(application)
 

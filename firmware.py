@@ -1,14 +1,18 @@
 from google.appengine.ext import db
 
+class FirmwareSource(db.Model):
+    name = db.StringProperty() # vendor, third party ...
+    
+class DevelopmentStatus(db.Model):
+    name = db.StringProperty() #"production", "beta", "under development"
+
 class FirmwareGroup(db.Model):
     name = db.StringProperty()
-    developmentStatus =  db.StringProperty(choices=set(["production", "beta", "under development"]))
-    origin =  db.StringProperty(choices=set(["vendor", "third party"]))    
+    developmentStatus =  db.ReferenceProperty(DevelopmentStatus)
+    origin =  db.ReferenceProperty(FirmwareSource)
     
 class Firmware(db.Model):
     version = db.StringProperty()
     releaseDate = db.DateTimeProperty()
-    developmentStatus =  db.StringProperty(choices=set(["production", "beta", "under development"]))
-    origin =  db.StringProperty(choices=set(["vendor", "third party"]))
     group = db.ReferenceProperty(FirmwareGroup)
     downloadLink = db.LinkProperty()

@@ -6,7 +6,7 @@
             <th>Unique Identifier</th>
 			<th>Name of Device</th>
             <th>Device Group</th>
-            <th>Manufactorer</th>
+            <th>Manufacturer</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,7 +24,7 @@
             <th>Unique Identifier</th>
 			<th>Name of Device</th>
             <th>Device Group</th>
-            <th>Manufactorer</th>
+            <th>Manufacturer</th>
 		</tr>
 	</tfoot>
 </table>
@@ -49,7 +49,7 @@
       <option>{{group.name}}</option>
       {% endfor %}
       </select></p>
-      <p><label for="devManName">Manufactorer</label><br/>
+      <p><label for="devManName">Manufacturer</label><br/>
       <select name="manufactorer" id="devManName" class="text ui-widget-content ui-corner-all fullWidth" size="1">
       {% for man in manufactorers%}
       <option>{{man.name}}</option>
@@ -59,7 +59,7 @@
     </form>    
 </div>      
 
-<div id="accordion">
+<div id="accordionDevices">
 <h3><a href="#">Configure device groups ...</a></h3>
 <div> <!-- accord 1-->
 
@@ -104,14 +104,14 @@
 
 
 
-<h3><a href="#">Configure Manufactorers ...</a></h3>
+<h3><a href="#">Configure Manufacturers ...</a></h3>
 <div><!-- accord 2-->
 <div class="insideTab"width>       
     
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="manufactorersTable">
 	<thead>
 		<tr>
-			<th>Name of Manufactorer</th>
+			<th>Name of Manufacturer</th>
             <th>Home page</th>
 		</tr>
 	</thead>
@@ -125,17 +125,17 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<th>Name of Manufactorer</th>
+			<th>Name of Manufacturer</th>
             <th>Home page</th>
 		</tr>
 	</tfoot>
 </table>
 
 <p>
-	<button id="buttonMan" type="button" class="ui-state-default ui-corner-all">New Manufactorer</button>
+	<button id="buttonMan" type="button" class="ui-state-default ui-corner-all">New Manufacturer</button>
 </p>    
-<div id="dialogMan" title="Add Manufactorer">
-	<p>Please provide details for new manufactorer entry.</p>
+<div id="dialogMan" title="Add Manufacturer">
+	<p>Please provide details for new manufacturer entry.</p>
     <form>
     </fieldset>
         <label for="manName">Name</label>
@@ -149,6 +149,6 @@
 </div> <!-- insideTab-->
 </div> <!-- accord 2-->
 
-</div> <!--accordion-->
+</div> <!--accordionDevices-->
 
 </div> <!-- insideTab -->

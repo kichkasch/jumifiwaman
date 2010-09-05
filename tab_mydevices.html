@@ -1,41 +1,67 @@
 <div class="insideTab">
 
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="myDevicesTable1">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="myDevicesTable">
 	<thead>
 		<tr>
-			<th>Rendering engine</th>
-			<th>Browser</th>
-			<th>Platform(s)</th>
-			<th>Engine version</th>
-			<th>CSS grade</th>
+			<th>Device</th>
+            <th>Manufacturer</th>
+			<th>Firmware Group</th>
+            <th>Firmware installed</th>
+            <th>Last firmware installation</th>
+            <th>Latest firmware available</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="gradeX">
-			<td>Trident</td>
-			<td>Internet
-				 Explorer 4.0</td>
-			<td>Win 95+</td>
-			<td class="center">4</td>
-			<td class="center">X</td>
+		<tr>
+			<td>EMTEC S800 Movie Cube</td>
+            <td>EMTEC</td>
+			<td>EMTEC S800 Vendor Firmware</td>
+            <td>905</td>
+            <td>2010-08-08</td>
+            <td>905</td>
 		</tr>
-		<tr class="gradeA">
-			<td>Misc</td>
-			<td>NetFront 3.1</td>
-			<td>Embedded devices</td>
-			<td class="center">-</td>
-			<td class="center">C</td>
+		<tr>
+			<td>Arcor A800 DSL WLAN Router</td>
+            <td>Arcor</td>
+			<td>Arcor A800 Vendor Firmware</td>
+            <td>1.02.206</td>
+            <td>2010-01-23</td>
+            <td>1.02.206</td>
+		</tr>
+		<tr>
+			<td>GXP 2000</td>
+            <td>Grandstream</td>
+			<td>Grandstream GXP 2000 Vendor Firmware</td>
+            <td>1.2.3.5</td>
+            <td>2010-04-24</td>
+            <td>1.2.3.5</td>
+		</tr>
+		<tr>
+			<td>ZyXEL NSA-220</td>
+            <td>Zyxel</td>
+			<td>ZyXEL NSA-220 Vendor Firmware</td>
+            <td>V3.22(AFB.1)</td>
+            <td>2010-03-07</td>
+            <td>V3.22(AFB.1)</td>
 		</tr>
 
 	</tbody>
 	<tfoot>
 		<tr>
-			<th>Rendering engine</th>
-			<th>Browser</th>
-			<th>Platform(s)</th>
-			<th>Engine version</th>
-			<th>CSS grade</th>
+			<th>Device</th>
+            <th>Manufacturer</th>
+			<th>Firmware Group</th>
+            <th>Firmware installed</th>
+            <th>Last firmware installation</th>
+            <th>Latest firmware available</th>
 		</tr>
 	</tfoot>
 </table>
+
+<p>
+<button id="myDevNew" type="button" class="ui-state-default ui-corner-all">Add new device</button>
+<button id="myDevDetails" type="button" class="ui-state-default ui-corner-all">Show details and updates histroy for selected row</button>
+<button id="deleteDevRow" type="button" class="ui-state-default ui-corner-all">Remove Selected Row from MyDevices</button>
+</p>
+
 </div>

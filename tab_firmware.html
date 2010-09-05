@@ -1,4 +1,139 @@
-    
-    <hr/>
-    <h2>Firmware Manager</h2>
+<div class="insideTab">
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="firmwareTable">
+	<thead>
+		<tr>
+			<th>Firmware Group Name</th>
+            <th>Source</th>
+            <th>Status of group</th>
+			<th>Latest release</th>
+			<th>Release date</th>
+            <th>Last update check</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>EMTEC S800 Vendor Firmware</td>
+            <td>Vendor</td>
+			<td>Final</td>
+			<td>2010-08-08</td>
+            <td>905</td>
+            <td>2010-09-05</td>
+		</tr>
+		<tr>
+			<td>EMTEC S800 Honky Firmware</td>
+			<td>Community</td>
+			<td>Final</td>
+			<td>2010-01-24</td>
+            <td>854 3.91</td>
+            <td>2010-09-05</td>
+		</tr>
+
+
+	</tbody>
+	<tfoot>
+		<tr>
+			<th>Firmware Group Name</th>
+            <th>Source</th>
+            <th>Status of group</th>
+			<th>Latest release</th>
+			<th>Release date</th>
+            <th>Last update check</th>
+		</tr>
+	</tfoot>
+</table>
+
+<p>
+<button id="fwGroupAdd" type="button" class="ui-state-default ui-corner-all">New firmware group</button>
+<button id="fwGroupDetails" type="button" class="ui-state-default ui-corner-all">Show details and release histroy for selected row</button>
+<button id="fwGroupUpdatecheck" type="button" class="ui-state-default ui-corner-all">Check for updates for selected row</button>
+</p>
+
+<div id="accordionFirmware">
+<h3><a href="#">Configure sources groups ...</a></h3>
+<div> <!-- accord 1-->
+<div class="insideTab"> 
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="fwSourcesGroupsTable">
+	<thead>
+		<tr>
+			<th>Name of Source Group</th>
+		</tr>
+	</thead>
+	<tbody>
+{% for group in firmwareSources %}    
+		<tr>
+			<td>{{ group.name }}</td>
+		</tr>
+{% endfor %}
+	</tbody>
+	<tfoot>
+		<tr>
+			<th>Name of Source Group</th>
+		</tr>
+	</tfoot>
+</table>
+
+<p>
+	<button id="buttonFWSourceGroup" type="button" class="ui-state-default ui-corner-all">New Firmware Source Group</button>
+</p>    
+<div id="dialogFWSourceGroup" title="Add Firmware Source Group">
+	<p>
+		Please provide details for the new firmware source group.
+	</p>
+    <form>
+    <fieldset>
+      <label for="fwSourceGroupName">Name</label>
+      <input type="text" name="fwSourceGroupName" id="fwSourceGroupName" class="text ui-widget-content ui-corner-all" />
+    </fieldset>
+    </form>    
+</div>  
+
+</div><!-- insideTab-->
+</div><!-- accord 1-->
+
+
+
+<h3><a href="#">Configure firmware status groups ...</a></h3>
+<div><!-- accord 2-->
+<div class="insideTab"width>       
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="fwStatusTable">
+	<thead>
+		<tr>
+			<th>Name of Development Status</th>
+		</tr>
+	</thead>
+	<tbody>
+{% for status in firmwareStatus %}    
+		<tr>
+			<td>{{ status.name }}</td>
+		</tr>
+{% endfor %}
+	</tbody>
+	<tfoot>
+		<tr>
+			<th>Name of Development Status</th>
+		</tr>
+	</tfoot>
+</table>
+<p>
+	<button id="buttonFWStatus" type="button" class="ui-state-default ui-corner-all">New Development Status</button>
+</p>    
+<div id="dialogFWStatus" title="Add Development Status">
+	<p>
+		Please provide details for the new development status.
+	</p>
+    <form>
+    <fieldset>
+      <label for="fwStatusName">Name</label>
+      <input type="text" name="fwStatusName" id="fwStatusName" class="text ui-widget-content ui-corner-all" />
+    </fieldset>
+    </form>    
+</div>  
+
+</div> <!-- insideTab-->
+</div> <!-- accord 2-->
+
+</div> <!--accordionFirmwares-->
+
+</div><!--insideTab-->
 
