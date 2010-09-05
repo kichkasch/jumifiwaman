@@ -12,23 +12,16 @@
 		</tr>
 	</thead>
 	<tbody>
+{% for group in firmwareGroups %}    
 		<tr>
-			<td>EMTEC S800 Vendor Firmware</td>
-            <td>Vendor</td>
-			<td>Final</td>
-			<td>2010-08-08</td>
-            <td>905</td>
-            <td>2010-09-05</td>
+			<td>{{ group.name }}</td>
+			<td>{{ group.developmentStatus.name }}</td>
+			<td>{{ group.origin.name }}</td>
+            <td/>
+            <td/>
+            <td/>
 		</tr>
-		<tr>
-			<td>EMTEC S800 Honky Firmware</td>
-			<td>Community</td>
-			<td>Final</td>
-			<td>2010-01-24</td>
-            <td>854 3.91</td>
-            <td>2010-09-05</td>
-		</tr>
-
+{% endfor %}
 
 	</tbody>
 	<tfoot>
@@ -48,6 +41,31 @@
 <button id="fwGroupDetails" type="button" class="ui-state-default ui-corner-all">Show details and release histroy for selected row</button>
 <button id="fwGroupUpdatecheck" type="button" class="ui-state-default ui-corner-all">Check for updates for selected row</button>
 </p>
+
+<div id="dialogFWGroup" title="Add Firmware Group">
+	<p>
+		Please provide details for the new firmware.
+	</p>
+    <form>
+    <fieldset>
+      <label for="fwGroupName">Name</label>
+      <input type="text" name="fwGroupName" id="fwGroupName" class="text ui-widget-content ui-corner-all" />
+      <p><label for="fwSource">Source</label><br/>
+      <select name="fwSource" id="fwSource" class="text ui-widget-content ui-corner-all fullWidth" size="1">
+      {% for group in firmwareSources %}
+      <option>{{group.name}}</option>
+      {% endfor %}
+      </select></p>
+      <p><label for="fwStatus">Delopment Status</label><br/>
+      <select name="fwStatus" id="fwStatus" class="text ui-widget-content ui-corner-all fullWidth" size="1">
+      {% for status in firmwareStatus%}
+      <option>{{status.name}}</option>
+      {% endfor %}
+      </select> </p>
+    </fieldset>
+    </form>    
+</div>      
+
 
 <div id="accordionFirmware">
 <h3><a href="#">Configure sources groups ...</a></h3>

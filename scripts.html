@@ -136,7 +136,7 @@
                 draggable: false ,
                 buttons: {
                     'Create this Device': function() {
-                        $('#devicesTable').dataTable().fnAddData( [$("#deviceId").val(),$("#deviceName").val(),$("#devDevGroup").val(),$("#devManName").val() ] );
+                        $('#devicesTable').dataTable().fnAddData( [$("#deviceId").val(),$("#deviceName").val(),$("#devDevGroup").val(),$("#devManName").val()] );
                         $.post("/newDevice", {
                             deviceName: $("#deviceName").val(), 
                             deviceID: $("#deviceId").val(), 
@@ -153,7 +153,33 @@
                 }
             });
         });
-
+        
+        $('#fwGroupAdd').click(function() {
+            $('#dialogFWGroup').dialog({
+                autoOpen: true,
+                width: 350,
+                modal: true,
+                draggable: false ,
+                buttons: {
+                    'Create this Firmware Group': function() {
+                        $('#firmwareTable').dataTable().fnAddData( [$("#fwGroupName").val(),$("#fwSource").val(),$("#fwStatus").val()  ,"","",""] );
+                        $.post("/newFirmwareGroup", {
+                            fwGroupName: $("#fwGroupName").val(), 
+                            fwGroupStatus: $("#fwStatus").val(), 
+                            fwGroupSource:$("#fwSource").val()
+                            });
+                        $(this).dialog('close');
+                    },
+                    Cancel: function() {
+                        $(this).dialog('close');
+                    }
+                },
+                close: function() {
+                    allFields.val('').removeClass('ui-state-error');
+                }
+            });
+        });        
+        
         $('#buttonFWSourceGroup').click(function() {
             $('#dialogFWSourceGroup').dialog({
                 autoOpen: true,
@@ -211,6 +237,7 @@
     $("#dialogDevice").hide();
     $('#dialogFWSourceGroup').hide();
     $('#dialogFWStatus').hide();
+    $('#dialogFWGroup').hide();
 
     $("#tabs").tabs();
 

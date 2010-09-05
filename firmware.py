@@ -10,6 +10,8 @@ class FirmwareGroup(db.Model):
     name = db.StringProperty()
     developmentStatus =  db.ReferenceProperty(DevelopmentStatus)
     origin =  db.ReferenceProperty(FirmwareSource)
+    latestFirmware = None
+    lastCheck = db.DateTimeProperty()
     
 class Firmware(db.Model):
     version = db.StringProperty()

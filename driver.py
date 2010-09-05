@@ -30,6 +30,16 @@ class MainPage(webapp.RequestHandler):
         
         fwStatusQuery = DevelopmentStatus.all().order('-name')
         fwStatus = fwStatusQuery.fetch(100)
+        
+        fwGroupsQuery = FirmwareGroup.all().order('-name')
+        fwGroups = fwGroupsQuery.fetch(100)
+        for g in fwGroups:
+            fwQuery = Firmware.all().filter("group =", g).order("-releaseDate")
+            fws = fwGroupsQuery.fetch(1)
+            if fws:
+                g.latestFirmware = fws[0]
+            else:
+                g.latestFirmware = None
 
         u = User()
         if users.get_current_user():
@@ -54,6 +64,7 @@ class MainPage(webapp.RequestHandler):
             'profileText': profText, 
             'firmwareSources': fwSources, 
             'firmwareStatus': fwStatus, 
+            'firmwareGroups': fwGroups
             }
 
         path = os.path.join(os.path.dirname(__file__), 'index.html')
@@ -107,6 +118,18 @@ class AddFirmwareStatus(webapp.RequestHandler):
         fwStatus.name = self.request.get('fwStatusName')
         fwStatus.put()
 
+class AddFirmware(webapp.RequestHandler):
+    def post(self):
+        fwGroup = FirmwareGroup()
+        fwGroup.name = self.request.get('fwGroupName')
+        status = self.request.get('fwGroupStatus')
+        source = self.request.get('fwGroupSource')
+        query = DevelopmentStatus.all().filter('name = ', status)
+        fwGroup.developmentStatus = query.fetch(1)[0]
+        query = FirmwareSource.all().filter('name = ', source)
+        fwGroup.origin = query.fetch(1)[0]
+        fwGroup.put()
+
 def main():
     application = webapp.WSGIApplication(
                                      [('/', MainPage),
@@ -117,6 +140,7 @@ def main():
                                       ('/removeManufactorer', RemoveManufactoer), 
                                       ('/newFirmwareSource', AddFirmwareSource), 
                                       ('/newFirmwareStatus', AddFirmwareStatus), 
+                                      ('/newFirmwareGroup', AddFirmware)
                                       ],
                                      debug=True)
     run_wsgi_app(application)
