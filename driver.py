@@ -122,6 +122,8 @@ class AddFirmware(webapp.RequestHandler):
     def post(self):
         fwGroup = FirmwareGroup()
         fwGroup.name = self.request.get('fwGroupName')
+        fwGroup.homepage = self.request.get('fwGroupHomepage')
+        fwGroup.notes = self.request.get('fwGroupNotes')
         status = self.request.get('fwGroupStatus')
         source = self.request.get('fwGroupSource')
         query = DevelopmentStatus.all().filter('name = ', status)
@@ -129,6 +131,14 @@ class AddFirmware(webapp.RequestHandler):
         query = FirmwareSource.all().filter('name = ', source)
         fwGroup.origin = query.fetch(1)[0]
         fwGroup.put()
+        
+class DetailsFirmwareGroup(webapp.RequestHandler):
+    def get(self):
+        name = self.request.get('name')
+        query = FirmwareGroup.all().filter('name = ', name)
+        fwg = query.fetch(1)[0]
+        txt = "%s\n%s\n%s\n%s\n%s" %(fwg.name, fwg.homepage, fwg.notes, fwg.developmentStatus.name, fwg.origin.name)
+        self.response.out.write(txt)
 
 def main():
     application = webapp.WSGIApplication(
@@ -140,7 +150,8 @@ def main():
                                       ('/removeManufactorer', RemoveManufactoer), 
                                       ('/newFirmwareSource', AddFirmwareSource), 
                                       ('/newFirmwareStatus', AddFirmwareStatus), 
-                                      ('/newFirmwareGroup', AddFirmware)
+                                      ('/newFirmwareGroup', AddFirmware), 
+                                      ('/details/fwGroupByName', DetailsFirmwareGroup)
                                       ],
                                      debug=True)
     run_wsgi_app(application)

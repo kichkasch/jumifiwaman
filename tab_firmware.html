@@ -15,8 +15,8 @@
 {% for group in firmwareGroups %}    
 		<tr>
 			<td>{{ group.name }}</td>
-			<td>{{ group.developmentStatus.name }}</td>
 			<td>{{ group.origin.name }}</td>
+			<td>{{ group.developmentStatus.name }}</td>
             <td/>
             <td/>
             <td/>
@@ -50,6 +50,10 @@
     <fieldset>
       <label for="fwGroupName">Name</label>
       <input type="text" name="fwGroupName" id="fwGroupName" class="text ui-widget-content ui-corner-all" />
+      <label for="fwGroupHomepage">Home page</label>
+      <input type="text" name="fwGroupHomepage" id="fwGroupHomepage" class="text ui-widget-content ui-corner-all" />
+      <label for="fwGroupNotes">Notes</label>
+      <input type="text"  name="fwGroupNotes" id="fwGroupNotes" class="text ui-widget-content ui-corner-all"/>
       <p><label for="fwSource">Source</label><br/>
       <select name="fwSource" id="fwSource" class="text ui-widget-content ui-corner-all fullWidth" size="1">
       {% for group in firmwareSources %}
@@ -65,6 +69,23 @@
     </fieldset>
     </form>    
 </div>      
+
+<div id="dialog-fwDetails" title="Details for Firmware Group">
+	<p><strong>Details</strong></p>
+    <p>
+    <table class="detailTable" width="100%">
+    <tr><td width="30%">Name</td><td width="70%"><span id="fwDetailsName">244</span></td></tr>
+    <tr><td width="30%">Home page</td><td><span id="fwDetailsHP">244</span></td></tr>
+    <tr><td width="30%">Notes</td><td><span id="fwDetailsNotes">244</span></td></tr>
+    <tr><td width="30%">Source</td><td ><span id="fwDetailsSource">244</span></td></tr>
+    <tr><td width="30%">Status</td><td ><span id="fwDetailsStatus">244</span></td></tr>
+    </table>
+    </p>
+        
+        <hr/><strong>Firmware release history</strong><br/>
+</p>
+</div>
+
 
 
 <div id="accordionFirmware">

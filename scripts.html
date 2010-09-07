@@ -42,7 +42,35 @@
             "bJQueryUI": true,
         });
         
-        $('#firmwareTable').dataTable( {
+        var myFirmwareTable;
+        $("#firmwareTable tbody").click(function(event) {
+            $(myFirmwareTable.fnSettings().aoData).each(function (){
+                $(this.nTr).removeClass('row_selected');
+            });
+            $(event.target.parentNode).addClass('row_selected');
+        });
+          $("#fwGroupDetails").click(function() {
+            var anSelected1 = fnGetSelected(myFirmwareTable);
+            var nTds = $('td', anSelected1);
+            $.get("/details/fwGroupByName", {name: $(nTds[0]).text()}, function(data){
+                var vals = data.split("\n");
+                $("#fwDetailsName").text(vals[0]);
+                $("#fwDetailsHP").text(vals[1]);
+                $("#fwDetailsNotes").text(vals[2]);
+                $("#fwDetailsStatus").text(vals[3]);
+                $("#fwDetailsSource").text(vals[4]);
+            }); 
+            /*$("#fwDetailsName").text($(nTds[0]).text());*/
+            $("#dialog-fwDetails").dialog({
+                width: 400,
+                modal: true,
+                draggable: false ,
+                closeText: 'show',
+                autoOpen: true,
+                buttons: { "Close": function() { $(this).dialog("close"); } },
+            });
+          });          
+        myFirmwareTable = $('#firmwareTable').dataTable( {
             "sPaginationType": "full_numbers",
             "bJQueryUI": true,
         });
@@ -70,7 +98,7 @@
                 buttons: { "Close": function() { $(this).dialog("close"); } },
             });
           });
-      
+                
         $("#buttonDetailToggler").click(function() {
             $("#deviceDetailToggler").toggle("blind",{},500);
             return false;
@@ -165,6 +193,8 @@
                         $('#firmwareTable').dataTable().fnAddData( [$("#fwGroupName").val(),$("#fwSource").val(),$("#fwStatus").val()  ,"","",""] );
                         $.post("/newFirmwareGroup", {
                             fwGroupName: $("#fwGroupName").val(), 
+                            fwGroupHomepage:$("#fwGroupHomepage").val(), 
+                            fwGroupNotes: $("#fwGroupNotes").val(), 
                             fwGroupStatus: $("#fwStatus").val(), 
                             fwGroupSource:$("#fwSource").val()
                             });
@@ -189,6 +219,7 @@
                 buttons: {
                     'Create this Firmware Source Group': function() {
                         $('#fwSourcesGroupsTable').dataTable().fnAddData( [$("#fwSourceGroupName").val()] );
+                        $('#fwSource').append("<option>" + $("#fwSourceGroupName").val() + "</option>");
                         $.post("/newFirmwareSource",{ fwSourceName: $("#fwSourceGroupName").val()});
                         $(this).dialog('close');
                     },
@@ -211,6 +242,7 @@
                 buttons: {
                     'Create this Development Status': function() {
                         $('#fwStatusTable').dataTable().fnAddData( [$("#fwStatusName").val()] );
+                        $('#fwStatus').append("<option>" + $("#fwStatusName").val() + "</option>");                        
                         $.post("/newFirmwareStatus",{ fwStatusName: $("#fwStatusName").val()});
                         $(this).dialog('close');
                     },
@@ -238,6 +270,7 @@
     $('#dialogFWSourceGroup').hide();
     $('#dialogFWStatus').hide();
     $('#dialogFWGroup').hide();
+    $("#dialog-fwDetails").hide();
 
     $("#tabs").tabs();
 
