@@ -30,6 +30,15 @@
         $('#devicesTable').dataTable( {
             "sPaginationType": "full_numbers",
             "bJQueryUI": true,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": "/getDevices",
+            "aoColumns": [
+                    null,
+                    null,
+                    { "bSortable": false },
+                    { "bSortable": false }
+                    ]
         });
 
         $('#deviceGroupsTable').dataTable( {
@@ -43,9 +52,16 @@
         });
         
         var myFirmwareTable;
+        myFirmwareTable = $('#firmwareTable').dataTable( {
+            "sPaginationType": "full_numbers",
+            "bJQueryUI": true,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": "/getFirmwareGroups"
+        });
         $("#firmwareTable tbody").click(function(event) {
             $(myFirmwareTable.fnSettings().aoData).each(function (){
-                $(this.nTr).removeClass('row_selected');
+                $(this.nTr).removeClass('row_selected');    // deselect before selected
             });
             $(event.target.parentNode).addClass('row_selected');
         });
@@ -60,7 +76,7 @@
                 $("#fwDetailsStatus").text(vals[3]);
                 $("#fwDetailsSource").text(vals[4]);
             }); 
-            /*$("#fwDetailsName").text($(nTds[0]).text());*/
+
             $("#dialog-fwDetails").dialog({
                 width: 400,
                 modal: true,
@@ -69,11 +85,8 @@
                 autoOpen: true,
                 buttons: { "Close": function() { $(this).dialog("close"); } },
             });
-          });          
-        myFirmwareTable = $('#firmwareTable').dataTable( {
-            "sPaginationType": "full_numbers",
-            "bJQueryUI": true,
-        });
+          });
+
 
         $('#fwSourcesGroupsTable').dataTable( {
             "sPaginationType": "full_numbers",
@@ -255,6 +268,10 @@
                 }
             });
         });        
+        
+        $('#fwGroupUpdatecheck').click(function () {
+//
+        });
         
         
     });

@@ -10,14 +10,7 @@
 		</tr>
 	</thead>
 	<tbody>
-{% for device in devices %}  
-		<tr >
-			<td>{{ device.deviceID}}</td>
-			<td>{{ device.name|escape }}</td>
-            <td>{{ device.group.name }}</td>
-            <td>{{device.manufactorer.name}}</td>
-		</tr>
-{% endfor %}
+    <tr><td colspan="6" class="dataTables_empty">Loading data from server</td></tr>
 	</tbody>
 	<tfoot>
 		<tr>
