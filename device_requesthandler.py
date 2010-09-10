@@ -1,5 +1,6 @@
 from device import *
 from google.appengine.ext import webapp
+from google.appengine.ext.db import stats
 
 class AddDevice(webapp.RequestHandler):
     def post(self):
@@ -34,9 +35,10 @@ class RemoveManufactoer(webapp.RequestHandler):
 
 class Devices(webapp.RequestHandler):
     def get(self):
+        nrDevices = int(Device.all().count())
         sEcho = self.request.get('sEcho')
-        numberRecords = self.request.get('iDisplayLength')
-        startRecords = self.request.get('iDisplayStart')
+        numberRecords = int(self.request.get('iDisplayLength'))
+        startRecords = int(self.request.get('iDisplayStart'))
         try:
             indexSort = int(self.request.get('iSortCol_0'))
         except:
@@ -49,8 +51,8 @@ class Devices(webapp.RequestHandler):
         sortList = ['deviceID','name']        
         device_query = Device.all().order(directionSort + sortList[indexSort])
         i=0
-        devices = device_query.fetch(100)
-        txt = '{"sEcho": ' + sEcho + ', "iTotalRecords": ' + str(len(devices)) + ', "iTotalDisplayRecords": '+ str(len(devices)) + ', "aaData":  ['
+        devices = device_query.fetch(numberRecords,  offset = startRecords)
+        txt = '{"sEcho": ' + sEcho + ', "iTotalRecords": ' + str(nrDevices) + ', "iTotalDisplayRecords": '+ str(nrDevices) + ', "aaData":  ['
         for device in devices:
             if i:
                 txt += ","

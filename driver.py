@@ -18,9 +18,6 @@ from device_requesthandler import *
 class MainPage(webapp.RequestHandler):
     
     def get(self):
-#        device_query = Device.all().order('-name')
-#        devices = device_query.fetch(100)
-        
         groupQuery = DeviceGroup.all().order('-name')
         groups = groupQuery.fetch(100)
 
@@ -48,7 +45,6 @@ class MainPage(webapp.RequestHandler):
 
         template_values = {
             'groups': groups, 
-#            'devices': devices,
             'manufactorers': mans, 
             'userText': userText, 
             'url': url, 
@@ -61,8 +57,6 @@ class MainPage(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'index.html')
         self.response.out.write(template.render(path, template_values))
     
-
-
 def main():
     application = webapp.WSGIApplication(
                                      [('/', MainPage),

@@ -177,8 +177,8 @@
                 draggable: false ,
                 buttons: {
                     'Create this Device': function() {
-                        $('#devicesTable').dataTable().fnAddData( [$("#deviceId").val(),$("#deviceName").val(),$("#devDevGroup").val(),$("#devManName").val()] );
-                        $.post("/newDevice", {
+<!--                         $('#devicesTable').dataTable().fnAddData( [$("#deviceId").val(),$("#deviceName").val(),$("#devDevGroup").val(),$("#devManName").val()] );-->                        
+                            $.post("/newDevice", {
                             deviceName: $("#deviceName").val(), 
                             deviceID: $("#deviceId").val(), 
                             deviceGroup:$("#devDevGroup").val(),
@@ -193,6 +193,7 @@
                     allFields.val('').removeClass('ui-state-error');
                 }
             });
+            $('#devicesTable').fnDraw();
         });
         
         $('#fwGroupAdd').click(function() {
