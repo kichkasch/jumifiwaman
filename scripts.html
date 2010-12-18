@@ -34,11 +34,12 @@
             "bServerSide": true,
             "sAjaxSource": "/getDevices",
             "aoColumns": [
-                    null,
+                    { "bSearchable": true},
                     null,
                     { "bSortable": false },
                     { "bSortable": false }
-                    ]
+                    ],
+            "sSearch": false    
         });
 
         $('#deviceGroupsTable').dataTable( {
@@ -157,6 +158,7 @@
                         $('#deviceGroupsTable').dataTable().fnAddData( [$("#groupName").val()] );
                         $('#devDevGroup').append("<option>" + $("#groupName").val() + "</option>");
                         $.post("/newDeviceGroup",{ groupName: $("#groupName").val()});
+
                         $(this).dialog('close');
                     },
                     Cancel: function() {
@@ -177,12 +179,13 @@
                 draggable: false ,
                 buttons: {
                     'Create this Device': function() {
-<!--                         $('#devicesTable').dataTable().fnAddData( [$("#deviceId").val(),$("#deviceName").val(),$("#devDevGroup").val(),$("#devManName").val()] );-->                        
                             $.post("/newDevice", {
                             deviceName: $("#deviceName").val(), 
                             deviceID: $("#deviceId").val(), 
                             deviceGroup:$("#devDevGroup").val(),
                             manufactorer:$("#devManName").val() });
+                        $('#devicesTable').dataTable().fnClearTable( 0 );
+                        $('#devicesTable').dataTable().fnDraw();
                         $(this).dialog('close');
                     },
                     Cancel: function() {
@@ -193,7 +196,6 @@
                     allFields.val('').removeClass('ui-state-error');
                 }
             });
-            $('#devicesTable').fnDraw();
         });
         
         $('#fwGroupAdd').click(function() {
@@ -204,7 +206,6 @@
                 draggable: false ,
                 buttons: {
                     'Create this Firmware Group': function() {
-                        $('#firmwareTable').dataTable().fnAddData( [$("#fwGroupName").val(),$("#fwSource").val(),$("#fwStatus").val()  ,"","",""] );
                         $.post("/newFirmwareGroup", {
                             fwGroupName: $("#fwGroupName").val(), 
                             fwGroupHomepage:$("#fwGroupHomepage").val(), 
@@ -212,6 +213,8 @@
                             fwGroupStatus: $("#fwStatus").val(), 
                             fwGroupSource:$("#fwSource").val()
                             });
+                        $('#firmwareTable').dataTable().fnClearTable( 0 );
+                        $('#firmwareTable').dataTable().fnDraw();
                         $(this).dialog('close');
                     },
                     Cancel: function() {

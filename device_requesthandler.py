@@ -48,7 +48,7 @@ class Devices(webapp.RequestHandler):
             directionSort = "-"
         else:
             directionSort = ""
-        sortList = ['deviceID','name']        
+        sortList = ['deviceID','name']
         device_query = Device.all().order(directionSort + sortList[indexSort])
         i=0
         devices = device_query.fetch(numberRecords,  offset = startRecords)
