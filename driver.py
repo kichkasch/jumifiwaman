@@ -33,6 +33,8 @@ class MainPage(webapp.RequestHandler):
         u = User()
         if users.get_current_user():
             u.googleUser = users.get_current_user()
+            u.role = 'add'  # later properly
+            u.put()
             userText = u.googleUser
             url = users.create_logout_url(self.request.uri)
             url_linktext = 'Logout'
@@ -67,9 +69,12 @@ def main():
                                       ('/newFirmwareSource', AddFirmwareSource), 
                                       ('/newFirmwareStatus', AddFirmwareStatus), 
                                       ('/newFirmwareGroup', AddFirmware), 
+                                      ('/newRelease', AddRelease), 
                                       ('/details/fwGroupByName', DetailsFirmwareGroup), 
                                       ('/getFirmwareGroups', FirmwareGroups), 
-                                      ('/getDevices', Devices)
+                                      ('/getDevices', Devices), 
+                                      ('/getLatestReleaseForFirmwareGroup', LatestRelease), 
+                                      ('/getAllReleasesForFirmwareGroup', AllReleases), 
                                       ],
                                      debug=True)
     run_wsgi_app(application)

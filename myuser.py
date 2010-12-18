@@ -9,11 +9,11 @@ class User(db.Model):
     googleUser = users.User
     role = db.StringProperty(choices=set(["read", "add", "delete"]))
     
-class Update(db.Model):
-    date = db.DateTimeProperty(auto_now_add=True)
-    device = db.ReferenceProperty(Device)
-    firmware = db.ReferenceProperty(Firmware)
-    user = db.ReferenceProperty(User)
+#class Update(db.Model):
+#    date = db.DateTimeProperty(auto_now_add=True)
+#    device = db.ReferenceProperty(Device)
+#    firmware = db.ReferenceProperty(Firmware)
+#    user = db.ReferenceProperty(User)
     
 # n-m relation
 class UserDevices(db.Model):

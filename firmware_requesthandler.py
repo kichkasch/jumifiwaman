@@ -1,5 +1,8 @@
 from firmware import *
+from myuser import User
 from google.appengine.ext import webapp
+from google.appengine.api import users
+from datetime import datetime
 
 class AddFirmwareSource(webapp.RequestHandler):
     def post(self):
@@ -26,7 +29,23 @@ class AddFirmware(webapp.RequestHandler):
         query = FirmwareSource.all().filter('name = ', source)
         fwGroup.origin = query.fetch(1)[0]
         fwGroup.put()
-        
+
+class AddRelease(webapp.RequestHandler):
+    def post(self):
+        release = Firmware()
+        release.version = self.request.get('fwReleaseNumber')
+        release.releaseDate = datetime.strptime(self.request.get("fwReleaseDate"), "%Y-%m-%d").date()
+        name = self.request.get('fwGroupForRelease')
+        query = FirmwareGroup.all().filter('name = ', name)
+        fwg = query.fetch(1)[0]
+        release.group = fwg
+        release.downloadLink = self.request.get('fwReleaseDirectLink')
+        googleUser = users.get_current_user()
+#        query = User.all().filter('googleUser = ', googleUser)
+#        release.insertMaintainer = query.fetch(1)[0]
+        release.insertMaintainer = None
+        release.put()
+
 class DetailsFirmwareGroup(webapp.RequestHandler):
     def get(self):
         name = self.request.get('name')
@@ -34,6 +53,32 @@ class DetailsFirmwareGroup(webapp.RequestHandler):
         fwg = query.fetch(1)[0]
         txt = "%s\n%s\n%s\n%s\n%s" %(fwg.name, fwg.homepage, fwg.notes, fwg.developmentStatus.name, fwg.origin.name)
         self.response.out.write(txt)
+        
+class LatestRelease(webapp.RequestHandler):
+    def get(self):
+        name = self.request.get('groupName')
+        query = FirmwareGroup.all().filter('name = ', name)
+        fwg = query.fetch(1)[0]
+        fwQuery = Firmware.all().filter("group =", fwg).order("-releaseDate")
+        fws = fwQuery.fetch(1)
+        if fws:
+            release = fws[0]
+            txt = "%s\n%s\n%s" %(release.version, release.releaseDate, release.downloadLink)
+        else:
+            txt = 'n.a.\nn.a.\nn.a.\n'
+        self.response.out.write(txt)
+        
+class AllReleases(webapp.RequestHandler):
+    def get(self):
+        name = self.request.get('groupName')
+        query = FirmwareGroup.all().filter('name = ', name)
+        fwg = query.fetch(1)[0]
+        fwQuery = Firmware.all().filter("group =", fwg).order("-releaseDate")
+        fws = fwQuery.fetch(20)
+        txt = ""
+        for release in fws:
+            txt += "<tr><td>%s</td><td>%s</td></tr>\n" %(str(release.releaseDate), release.version)
+        self.response.out.write(txt)        
         
 class FirmwareGroups(webapp.RequestHandler):
     def get(self):
@@ -50,7 +95,7 @@ class FirmwareGroups(webapp.RequestHandler):
             fws = fwQuery.fetch(1)
             if fws:
                 fws = fws[0]
-                txt += '"'+ fws.version + '", "'+ fws.releaseDate + '", ""'
+                txt += '"'+ str(fws.version) + '", "'+ str(fws.releaseDate) + '", ""'
             else:
                 txt += '"", "", ""'
             txt += ']'

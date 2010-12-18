@@ -73,11 +73,45 @@
     </table>
     </p>
         
-        <hr/><strong>Firmware release history</strong><br/>
+        <hr/>
+    <p><strong>Firmware release history</strong> (up to last 20 entries)</p>
+    <table class="detailTable" id = "tableFirmwareHistory">
+    <tbody/>
+    </table>
 </p>
 </div>
 
 
+<!--
+Dialog for manual Firmware update check 
+-->
+<div id="dialogFWManualUpdateCheck" title="Manual Firmware Update Check">
+	<center><span id="fwManualFWName"></span></center>
+    <p><strong>Latest known release</strong></p>
+    <p>
+    <table class="detailTable" width="100%">
+    <tr><td width="30%">Release Number</td><td width="70%"><span id="fwManualLatestNumber">0.0.1</span></td></tr>
+    <tr><td width="30%">Release Date</td><td><span id="fwManualLatestDate">2010-01-01</span></td></tr>
+    </table>
+    </p>
+    <hr/>
+    <p><strong>Instructions</strong></p>
+    <p><span id="fwManualInstruction">Check the following URL for newer version of firmware than given at *Latest known release* at the top of this dialog. Provide the release information in the form below (*optional).</span></p>
+    <p>URL: <span id="fwManualURL"></span></p>
+    <hr/>
+    <p><strong>Release details</strong></p>
+    <form>
+    <fieldset>
+      <label for="fwManualReleaseNumber">Full Release Number</label>
+      <input type="text" name="fwManualReleaseNumber" id="fwManualReleaseNumber" class="text ui-widget-content ui-corner-all" />
+      <label for="fwManualReleaseDate">Release Date</label>
+      <input type="text" name="fwManualReleaseDate" id="fwManualReleaseDate" class="text ui-widget-content ui-corner-all" />
+      <label for="fwManualReleaseDirectLink">Direct Link to file*</label>
+      <input type="text" name="fwManualReleaseDirectLink" id="fwManualReleaseDirectLink" class="text ui-widget-content ui-corner-all" />
+    </fieldset>
+    </form>    
+</div> 
+<!-- end dialog -->
 
 <div id="accordionFirmware">
 <h3><a href="#">Configure sources groups ...</a></h3>

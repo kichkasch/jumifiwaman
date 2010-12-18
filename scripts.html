@@ -77,7 +77,13 @@
                 $("#fwDetailsStatus").text(vals[3]);
                 $("#fwDetailsSource").text(vals[4]);
             }); 
-
+            
+            $('#tableFirmwareHistory > tbody:last').empty();
+            $('#tableFirmwareHistory > tbody:last').append('<tr><th width="50%">Release date</th><th width="50%">Version number</th></tr>');
+            $.get("/getAllReleasesForFirmwareGroup", {groupName: $(nTds[0]).text()}, function(data){
+                    $('#tableFirmwareHistory > tbody:last').append(data);
+            });
+            
             $("#dialog-fwDetails").dialog({
                 width: 400,
                 modal: true,
@@ -87,6 +93,47 @@
                 buttons: { "Close": function() { $(this).dialog("close"); } },
             });
           });
+          
+        $('#fwGroupUpdatecheck').click(function () {
+            var anSelected1 = fnGetSelected(myFirmwareTable);
+            var nTds = $('td', anSelected1);
+            $.get("/details/fwGroupByName", {name: $(nTds[0]).text()}, function(data){
+                var vals = data.split("\n");
+                $("#fwManualFWName").text(vals[0]);
+                $("#fwManualURL").text(vals[1]);
+            });    
+            $.get("/getLatestReleaseForFirmwareGroup", {groupName: $(nTds[0]).text()}, function(data){
+                var vals = data.split("\n");
+                $("#fwManualLatestNumber").text(vals[0]);
+                $("#fwManualLatestDate").text(vals[1]);            
+            });
+            $('#dialogFWManualUpdateCheck').dialog({
+                autoOpen: true,
+                width: 400,
+                modal: true,
+                draggable: false ,
+                buttons: {
+                    'Add this release to Firmware Group': function() {
+                        $.post("/newRelease", {
+                            fwReleaseNumber: $("#fwManualReleaseNumber").val(), 
+                            fwReleaseDate:$("#fwManualReleaseDate").val(), 
+                            fwGroupForRelease: $(nTds[0]).text(), 
+                            fwReleaseDirectLink: $("#fwManualReleaseDirectLink").val()
+                            });
+                        $('#firmwareTable').dataTable().fnClearTable(0);
+                        $('#firmwareTable').dataTable().fnDraw();                        
+                        $(this).dialog('close');
+                    },
+                    Cancel: function() {
+                        $(this).dialog('close');
+                    }
+                },
+                close: function() {
+                    allFields.val('').removeClass('ui-state-error');
+                }
+            });
+        });
+          
 
 
         $('#fwSourcesGroupsTable').dataTable( {
@@ -273,11 +320,6 @@
             });
         });        
         
-        $('#fwGroupUpdatecheck').click(function () {
-//
-        });
-        
-        
     });
 
     $('#dialog-help').hide();
@@ -292,6 +334,7 @@
     $('#dialogFWStatus').hide();
     $('#dialogFWGroup').hide();
     $("#dialog-fwDetails").hide();
+    $('#dialogFWManualUpdateCheck').hide();
 
     $("#tabs").tabs();
 

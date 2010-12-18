@@ -15,3 +15,9 @@ indexes:
   - name: group
   - name: releaseDate
     direction: desc
+
+- kind: Firmware
+  properties:
+  - name: group
+  - name: version
+    direction: desc
