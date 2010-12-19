@@ -12,6 +12,7 @@
         });        
 
         var myDevTable;
+        /*
         $("#myDevicesTable tbody").click(function(event) {
             $(myDevTable.fnSettings().aoData).each(function (){
                 $(this.nTr).removeClass('row_selected');
@@ -21,10 +22,23 @@
         $('#deleteDevRow').click( function() {
             var anSelected = fnGetSelected( myDevTable);
             myDevTable.fnDeleteRow( anSelected[0] );    
-        } );
+        } ); */
+        
         myDevTable = $('#myDevicesTable').dataTable( {
             "sPaginationType": "full_numbers",
             "bJQueryUI": true,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": "/getMyDevices",
+            "aoColumns": [
+                    { "bSearchable": true},
+                    null,
+                    { "bSortable": false },
+                    { "bSortable": false },
+                    null,
+                    null
+                    ],
+            "sSearch": false    
         });
         
         $('#devicesTable').dataTable( {

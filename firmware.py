@@ -1,5 +1,5 @@
 from google.appengine.ext import db
-from myuser import User
+#from myuser import User
 
 class FirmwareSource(db.Model):
     name = db.StringProperty() # vendor, third party ...
@@ -21,4 +21,4 @@ class Firmware(db.Model):
     releaseDate = db.DateProperty()
     group = db.ReferenceProperty(FirmwareGroup)
     downloadLink = db.LinkProperty()
-    insertMaintainer = db.ReferenceProperty(User) # who provided this information
+#    insertMaintainer = db.ReferenceProperty(User) # who provided this information

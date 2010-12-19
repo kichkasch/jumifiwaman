@@ -14,6 +14,7 @@ from firmware import *
 from myuser import User
 from firmware_requesthandler import *
 from device_requesthandler import *
+from myuser_requesthandler import *
 
 class MainPage(webapp.RequestHandler):
     
@@ -33,7 +34,7 @@ class MainPage(webapp.RequestHandler):
         u = User()
         if users.get_current_user():
             u.googleUser = users.get_current_user()
-            u.role = 'add'  # later properly
+#            u.role = 'add'  # later properly
             u.put()
             userText = u.googleUser
             url = users.create_logout_url(self.request.uri)
@@ -62,19 +63,23 @@ class MainPage(webapp.RequestHandler):
 def main():
     application = webapp.WSGIApplication(
                                      [('/', MainPage),
+#                                      everything about devices -> check device_requesthandler for details
                                       ('/newDevice', AddDevice), 
                                       ('/newDeviceGroup', AddDeviceGroup), 
                                       ('/newManufactorer', AddManufactorer), 
                                       ('/removeManufactorer', RemoveManufactoer), 
+                                      ('/getDevices', Devices), 
+#                                      everything about firmwares -> check firmware_requesthandler for details
                                       ('/newFirmwareSource', AddFirmwareSource), 
                                       ('/newFirmwareStatus', AddFirmwareStatus), 
                                       ('/newFirmwareGroup', AddFirmware), 
                                       ('/newRelease', AddRelease), 
                                       ('/details/fwGroupByName', DetailsFirmwareGroup), 
                                       ('/getFirmwareGroups', FirmwareGroups), 
-                                      ('/getDevices', Devices), 
                                       ('/getLatestReleaseForFirmwareGroup', LatestRelease), 
                                       ('/getAllReleasesForFirmwareGroup', AllReleases), 
+#                                      everything about user specific information (mydevices etc.)-> check myuser_requesthandler for details
+                                      ('/getMyDevices', AllUserDevices), 
                                       ],
                                      debug=True)
     run_wsgi_app(application)
