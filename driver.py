@@ -19,16 +19,16 @@ from myuser_requesthandler import *
 class MainPage(webapp.RequestHandler):
     
     def get(self):
-        groupQuery = DeviceGroup.all().order('-name')
+        groupQuery = DeviceGroup.all().order('name')
         groups = groupQuery.fetch(100)
 
-        manQuery = Manufactorer.all().order('-name')
+        manQuery = Manufactorer.all().order('name')
         mans = manQuery.fetch(100)
 
-        fwSourceQuery = FirmwareSource.all().order('-name')
+        fwSourceQuery = FirmwareSource.all().order('name')
         fwSources = fwSourceQuery.fetch(100)
         
-        fwStatusQuery = DevelopmentStatus.all().order('-name')
+        fwStatusQuery = DevelopmentStatus.all().order('name')
         fwStatus = fwStatusQuery.fetch(100)
 
         u = User()
