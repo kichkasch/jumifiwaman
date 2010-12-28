@@ -70,6 +70,7 @@ def main():
                                       ('/removeManufactorer', RemoveManufactoer), 
                                       ('/getDevices', Devices), 
                                       ('/getDevicesForGroup', DevicesForGroup), 
+                                      ('/details/deviceDetails', DetailsForDevice), 
 #                                      everything about firmwares -> check firmware_requesthandler for details
                                       ('/newFirmwareSource', AddFirmwareSource), 
                                       ('/newFirmwareStatus', AddFirmwareStatus), 
@@ -86,7 +87,8 @@ def main():
                                       ('/getMyDevices', AllUserDevices), 
                                       ('/addToMyDevices', AddMyDevice), 
                                       ('/applyFWGToMyDevice', ApplyFWGToDevice), 
-                                      ('/documentUpdateToMyDevice', UpdateMyDevice)
+                                      ('/documentUpdateToMyDevice', UpdateMyDevice), 
+                                      ('/getAllUpdatesForUserDevice', UpdatesForUserDevice)
                                       ],
                                      debug=True)
     run_wsgi_app(application)

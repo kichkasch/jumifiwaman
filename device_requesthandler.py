@@ -71,3 +71,11 @@ class DevicesForGroup(webapp.RequestHandler):
         for device in devices:
             txt += '<option>' + device.name + '</option>'
         self.response.out.write(txt)
+
+class DetailsForDevice(webapp.RequestHandler):
+    def get(self):
+        name = self.request.get('name')
+        query = Device.all().filter('name = ', name)
+        dev = query.fetch(1)[0]
+        txt = "%s\n%s" %(dev.group.name, dev.manufactorer.name)
+        self.response.out.write(txt)

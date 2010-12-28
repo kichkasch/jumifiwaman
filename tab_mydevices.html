@@ -92,10 +92,34 @@
       <select name="myDeviceUpdate" id="myDeviceUpdate" class="text ui-widget-content ui-corner-all fullWidth" size="1">
       <option>... select ...</option>
       </select> </p>
-
+      <p><label for="myDeviceUpdateDate">Installation date (*now* or YYYY-MM-DD)</label><br/>
+      <input type="text" name="myDeviceUpdateDate" id="myDeviceUpdateDate" class="text ui-widget-content ui-corner-all" value="now"/>
       </fieldset>
     </form>   
 
+</div> <!-- dialog -->
+
+<div id="dialogMyDevicesDetails" title="Details and update history for device">
+    <p><strong><span id="myDevDetailsName">n.a.</span></strong></p>
+    <p>
+    <table class="detailTable"  id="myDevDetailsTable" cellspacing="10" >
+    <tr><td width="30%">Manufactorer:</td><td width="70%"><span id="myDevManufactorer">n.a.</span></td></tr>
+    <tr><td width="30%">Device Group:</td><td width="70%"><span id="myDevDevGroup">n.a.</span></td></tr>
+    </table>
+    </p>
+    <hr/>
+    <p><strong>Update history</p>
+    <p>
+    <table class="detailTable" id="myDevUpdateHistoryTable"width="100%" cellspacing="8" >
+		<tr>
+			<th>Install Date</th>
+            <th>Firmware Group</th>
+            <th>Release Number</th>
+		</tr>
+	</thead>
+    <tbody/>   
+    </table>
+    </p>
 </div> <!-- dialog -->
 
 </div> <!-- class inside tab -->

@@ -3,6 +3,7 @@ from device import Device
 from firmware import FirmwareGroup, Firmware
 from google.appengine.ext import webapp
 from google.appengine.api import users
+from datetime import datetime
 
 class AllUserDevices(webapp.RequestHandler):
     def get(self):
@@ -131,7 +132,13 @@ class UpdateMyDevice(webapp.RequestHandler):
         releaseNumber = self.request.get('releaseName')
         relQuery = Firmware.all().filter('group = ', fwgItem).filter('version = ', releaseNumber)
         relItem = relQuery.fetch(1)[0]
-            
+        
+        installationTime = self.request.get('releaseDate')
+        if installationTime.strip().lower() == "now":
+            installationTime = None
+        else:
+            installationTime = datetime.strptime(installationTime, "%Y-%m-%d")
+        
         gUser = users.get_current_user()
         query = User.all().filter('googleUser = ', gUser)
         res = query.fetch(1)
@@ -141,5 +148,24 @@ class UpdateMyDevice(webapp.RequestHandler):
         udu.user = myUser
         udu.device = devItem
         udu.release = relItem
+        if installationTime:
+            udu.updateDatetime = installationTime
         udu.put()
         
+class UpdatesForUserDevice (webapp.RequestHandler):
+    def get(self):
+        devName = self.request.get('devName')
+        device_query = Device.all().filter('name = ', devName)
+        devItem = device_query.fetch(1)[0]           
+        
+        gUser = users.get_current_user()
+        query = User.all().filter('googleUser = ', gUser)
+        res = query.fetch(1)
+        myUser = res[0]        
+        
+        query = UserDeviceUpdates.all().filter('user = ', myUser).filter('device = ', devItem).order('-updateDatetime')
+        releases = query.fetch(20)
+        txt = ""
+        for release in releases:
+            txt += "<tr><td>%s</td><td>%s</td><td>%s</td></tr>\n" %(str(release.updateDatetime.date()), release.release.group.name, release.release.version)
+        self.response.out.write(txt)            
