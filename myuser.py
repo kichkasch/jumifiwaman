@@ -6,7 +6,7 @@ from device import *
 from firmware import FirmwareGroup, Firmware
 
 class User(db.Model):
-    googleUser = users.User
+    googleUser = db.UserProperty()
 #    role = db.StringProperty(choices=set(["read", "add", "delete"]))
     
 # n-m relation

@@ -102,3 +102,12 @@ class FirmwareGroups(webapp.RequestHandler):
             i+=1            
         txt += ']}'
         self.response.out.write(txt)
+
+class FWGsForDevice(webapp.RequestHandler):
+    def get(self):
+        query = FirmwareGroup.all().order('name')
+        fwgs = query.fetch(100)
+        txt = '<option>--none--</option>'
+        for fwg in fwgs:
+            txt += '<option>' + fwg.name + '</option>'
+        self.response.out.write(txt)

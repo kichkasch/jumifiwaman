@@ -60,3 +60,14 @@ class Devices(webapp.RequestHandler):
             i+=1            
         txt += ']}'
         self.response.out.write(txt)
+        
+class DevicesForGroup(webapp.RequestHandler):
+    def get(self):
+        query = DeviceGroup.all().filter('name = ', self.request.get('deviceGroup'))
+        devgroup = query.fetch(1)[0]
+        device_query = Device.all().filter('group = ',  devgroup)
+        devices = device_query.fetch(100)
+        txt = ''
+        for device in devices:
+            txt += '<option>' + device.name + '</option>'
+        self.response.out.write(txt)

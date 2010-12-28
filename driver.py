@@ -33,10 +33,10 @@ class MainPage(webapp.RequestHandler):
 
         u = User()
         if users.get_current_user():
-            u.googleUser = users.get_current_user()
-#            u.role = 'add'  # later properly
-            u.put()
-            userText = u.googleUser
+#            u.googleUser = users.get_current_user()
+###            u.role = 'add'  # later properly
+#            u.put()
+            userText = users.get_current_user()
             url = users.create_logout_url(self.request.uri)
             url_linktext = 'Logout'
             profText = 'Profile Settings'
@@ -69,6 +69,7 @@ def main():
                                       ('/newManufactorer', AddManufactorer), 
                                       ('/removeManufactorer', RemoveManufactoer), 
                                       ('/getDevices', Devices), 
+                                      ('/getDevicesForGroup', DevicesForGroup), 
 #                                      everything about firmwares -> check firmware_requesthandler for details
                                       ('/newFirmwareSource', AddFirmwareSource), 
                                       ('/newFirmwareStatus', AddFirmwareStatus), 
@@ -78,8 +79,10 @@ def main():
                                       ('/getFirmwareGroups', FirmwareGroups), 
                                       ('/getLatestReleaseForFirmwareGroup', LatestRelease), 
                                       ('/getAllReleasesForFirmwareGroup', AllReleases), 
+                                      ('/getFWGsForDevice', FWGsForDevice), 
 #                                      everything about user specific information (mydevices etc.)-> check myuser_requesthandler for details
                                       ('/getMyDevices', AllUserDevices), 
+                                      ('/addToMyDevices', AddMyDevice)
                                       ],
                                      debug=True)
     run_wsgi_app(application)

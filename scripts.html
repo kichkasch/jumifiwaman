@@ -332,7 +332,47 @@
                     allFields.val('').removeClass('ui-state-error');
                 }
             });
-        });        
+        });
+
+
+        $('#myDevNew').click(function() {
+            $('#dialogMyDevicesNew').dialog({
+                autoOpen: true,
+                width: 350,
+                modal: true,
+                draggable: false ,
+                buttons: {
+                    'Add this Device': function() {
+                            $.post("/addToMyDevices", {
+                            deviceName: $("#myDeviceNewDevice").val(),
+                            fwgName: $("#myDeviceNewDeviceFWG").val()
+                            });
+                        $('#myDevicesTable').dataTable().fnClearTable( 0 );
+                        $('#myDevicesTable').dataTable().fnDraw();
+                        $(this).dialog('close');
+                    },
+                    Cancel: function() {
+                        $(this).dialog('close');
+                    }
+                },
+                close: function() {
+                    allFields.val('').removeClass('ui-state-error');
+                }
+                                
+            });
+            $('#myDeviceNewDeviceFWG').empty();            
+            $.get("/getFWGsForDevice", {}, function(data){
+                $('#myDeviceNewDeviceFWG').append(data);
+            });
+            
+        });
+        
+        $('#myDeviceGroup').change(function() {
+            $('#myDeviceNewDevice').empty();            
+            $.get("/getDevicesForGroup", {deviceGroup: $("#myDeviceGroup").val()}, function(data){
+                $('#myDeviceNewDevice').append(data);
+            });                            
+        });
         
     });
 
@@ -349,6 +389,7 @@
     $('#dialogFWGroup').hide();
     $("#dialog-fwDetails").hide();
     $('#dialogFWManualUpdateCheck').hide();
+    $("#dialogMyDevicesNew").hide();
 
     $("#tabs").tabs();
 

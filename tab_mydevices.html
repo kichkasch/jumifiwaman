@@ -29,8 +29,43 @@
 <p>
 <button id="myDevNew" type="button" class="ui-state-default ui-corner-all">Add new device</button>
 <button id="myDevChangeFW" type="button" class="ui-state-default ui-corner-all">Apply new Firmware Group to selected device</button>
+<button id="myDevDocumentUpdate" type="button" class="ui-state-default ui-corner-all">Document Update for selected Row</button>
 <button id="myDevDetails" type="button" class="ui-state-default ui-corner-all">Show details and updates histroy for selected row</button>
 <button id="deleteDevRow" type="button" class="ui-state-default ui-corner-all">Remove Selected Row from MyDevices</button>
 </p>
+
+
+<div id="dialogMyDevicesNew" title="Add Device to My Devices">
+	<p>
+		Please select device and firmware group from list.
+	</p>
+    <form>
+    <fieldset>
+      <p><label for="myDeviceGroup">First select Device Group</label><br/>
+      <select name="myDeviceGroup" id="myDeviceGroup" class="text ui-widget-content ui-corner-all fullWidth" size="1">
+      {% for group in groups %}
+      <option>{{group.name}}</option>
+      {% endfor %}
+      </select></p>
+            
+      <p><label for="myDeviceNewDevice">Device</label><br/>
+      <select name="myDeviceNewDevice" id="myDeviceNewDevice" class="text ui-widget-content ui-corner-all fullWidth" size="1">
+      <option>... select ...</option>
+      </select> </p>
+
+      <p><label for="myDeviceNewDeviceFWG">Firmware Group for this Device</label><br/>
+      <select name="myDeviceNewDeviceFWG" id="myDeviceNewDeviceFWG" class="text ui-widget-content ui-corner-all fullWidth" size="1">
+      <option>... select ...</option>
+      </select> </p>
+
+      </fieldset>
+    </form>    
+    
+    <hr/>
+    <p><strong>Device not listed?</strong></p>
+    <p>Please check tab *Devices* and prepare required information there before choosing a device in your personal list here.</p>
+    
+</div>    
+
 
 </div>
