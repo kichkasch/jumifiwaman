@@ -1,6 +1,6 @@
 from myuser import *
 from device import Device
-from firmware import FirmwareGroup
+from firmware import FirmwareGroup, Firmware
 from google.appengine.ext import webapp
 from google.appengine.api import users
 
@@ -38,7 +38,19 @@ class AllUserDevices(webapp.RequestHandler):
         for device in devices:
             if i:
                 txt += ","
-            txt += '["' + device.device.name + '","' + device.device.manufactorer.name + '","' + 'n.a.'+ '","' + 'n.a.'+  '","' +'n.a.' +  '","' +'n.a.'+ '"]'
+            if device.firmwareGroup:
+                fwgName = device.firmwareGroup.name
+                fwQuery = Firmware.all().filter("group =", device.firmwareGroup).order("-releaseDate")
+                fws = fwQuery.fetch(1)
+                if fws:
+                    fws = fws[0]
+                    fwgLatest = str(fws.version) + ' ('+ str(fws.releaseDate) + ')'
+                else:
+                    fwgLatest = "n.a."
+            else:
+                fwgName = "n.a."
+                fwgLatest = "n.a."
+            txt += '["' + device.device.name + '","' + device.device.manufactorer.name + '","' + fwgName+ '","' + 'n.a.'+  '","' +'n.a.' +  '","' + fwgLatest+ '"]'
             i+=1            
         txt += ']}'
         self.response.out.write(txt)
@@ -73,3 +85,28 @@ class AddMyDevice(webapp.RequestHandler):
         userDevice.firmwareGroup = fwgItem
         
         userDevice.put()
+        
+class ApplyFWGToDevice(webapp.RequestHandler):
+    def post(self):
+        devName = self.request.get('deviceName')
+        device_query = Device.all().filter('name = ', devName)
+        devItem = device_query.fetch(1)[0]        
+        
+        gUser = users.get_current_user()
+        query = User.all().filter('googleUser = ', gUser)
+        res = query.fetch(1)
+        myUser = res[0]
+        
+        query = UserDevices.all().filter('user = ', myUser).filter('device = ', devItem)
+        item = query.fetch(1)[0]
+        
+        fwgName = self.request.get('fwgName')   # firmware group name
+        if fwgName.strip().lower() == "--none--":
+            fwgItem = None
+        else:
+            fw_query = FirmwareGroup.all().filter('name = ', fwgName)
+            fwgItem = fw_query.fetch(1)[0]
+            
+        item.firmwareGroup = fwgItem
+        
+        item.put()

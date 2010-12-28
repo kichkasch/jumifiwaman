@@ -82,7 +82,8 @@ def main():
                                       ('/getFWGsForDevice', FWGsForDevice), 
 #                                      everything about user specific information (mydevices etc.)-> check myuser_requesthandler for details
                                       ('/getMyDevices', AllUserDevices), 
-                                      ('/addToMyDevices', AddMyDevice)
+                                      ('/addToMyDevices', AddMyDevice), 
+                                      ('/applyFWGToMyDevice', ApplyFWGToDevice)
                                       ],
                                      debug=True)
     run_wsgi_app(application)

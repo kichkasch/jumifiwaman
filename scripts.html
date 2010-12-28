@@ -11,7 +11,6 @@
             active: false,
         });        
 
-        var myDevTable;
         /*
         $("#myDevicesTable tbody").click(function(event) {
             $(myDevTable.fnSettings().aoData).each(function (){
@@ -24,6 +23,7 @@
             myDevTable.fnDeleteRow( anSelected[0] );    
         } ); */
         
+        var myDevTable;
         myDevTable = $('#myDevicesTable').dataTable( {
             "sPaginationType": "full_numbers",
             "bJQueryUI": true,
@@ -39,6 +39,12 @@
                     null
                     ],
             "sSearch": false    
+        });
+        $('#myDevicesTable').click(function(event) {
+            $(myDevTable.fnSettings().aoData).each(function (){
+                $(this.nTr).removeClass('row_selected');    // deselect before selected
+            });
+            $(event.target.parentNode).addClass('row_selected');
         });
         
         $('#devicesTable').dataTable( {
@@ -159,6 +165,42 @@
             "sPaginationType": "full_numbers",
             "bJQueryUI": true,
         });
+        
+        $('#myDevChangeFW').click(function() {
+            var anSelected2 = fnGetSelected(myDevTable);
+            var nTds2 = $('td', anSelected2);
+            var fwgChangeDevName = $(nTds2[0]).text();
+            $("#myDevChangeFWG").text(fwgChangeDevName);
+            $('#dialogMyDevicesChangeFWG').dialog({
+                autoOpen: true,
+                width: 350,
+                modal: true,
+                draggable: false ,
+                buttons: {
+                    'Apply this firmware group': function() {
+                            $.post("/applyFWGToMyDevice", {
+                            deviceName: fwgChangeDevName,
+                            fwgName: $("#myDeviceChangeFWG").val()
+                            });
+                        $('#myDevicesTable').dataTable().fnClearTable( 0 );
+                        $('#myDevicesTable').dataTable().fnDraw();
+                        $(this).dialog('close');
+                    },
+                    Cancel: function() {
+                        $(this).dialog('close');
+                    }
+                },
+                close: function() {
+                    allFields.val('').removeClass('ui-state-error');
+                } //close
+            }); // dialog
+            $('#myDeviceChangeFWG').empty();            
+            $.get("/getFWGsForDevice", {}, function(data){
+                $('#myDeviceChangeFWG').append(data);
+            });            
+            
+        });  //click
+        
         
     } );
     
@@ -363,9 +405,9 @@
             $('#myDeviceNewDeviceFWG').empty();            
             $.get("/getFWGsForDevice", {}, function(data){
                 $('#myDeviceNewDeviceFWG').append(data);
-            });
-            
+            });            
         });
+            
         
         $('#myDeviceGroup').change(function() {
             $('#myDeviceNewDevice').empty();            
@@ -390,7 +432,7 @@
     $("#dialog-fwDetails").hide();
     $('#dialogFWManualUpdateCheck').hide();
     $("#dialogMyDevicesNew").hide();
-
+    $("#dialogMyDevicesChangeFWG").hide(); 
     $("#tabs").tabs();
 
 	</script>

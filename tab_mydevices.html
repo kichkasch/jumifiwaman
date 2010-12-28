@@ -31,7 +31,7 @@
 <button id="myDevChangeFW" type="button" class="ui-state-default ui-corner-all">Apply new Firmware Group to selected device</button>
 <button id="myDevDocumentUpdate" type="button" class="ui-state-default ui-corner-all">Document Update for selected Row</button>
 <button id="myDevDetails" type="button" class="ui-state-default ui-corner-all">Show details and updates histroy for selected row</button>
-<button id="deleteDevRow" type="button" class="ui-state-default ui-corner-all">Remove Selected Row from MyDevices</button>
+<!--<button id="deleteDevRow" type="button" class="ui-state-default ui-corner-all">Remove Selected Row from MyDevices</button>-->
 </p>
 
 
@@ -63,9 +63,23 @@
     
     <hr/>
     <p><strong>Device not listed?</strong></p>
-    <p>Please check tab *Devices* and prepare required information there before choosing a device in your personal list here.</p>
-    
+    <p>Please check tab *Devices* and prepare required information there before choosing a device in your personal list here.</p>    
 </div>    
 
+
+<div id="dialogMyDevicesChangeFWG" title="Apply other Firmware Group">
+    <p>Current device is: <strong><div id="myDevChangeFWG">n.a.</div></strong></p>
+    <hr/>
+    <p>Please select new firmware group from list</p>
+    <form>
+    <fieldset>
+      <p><label for="myDeviceChangeFWG">New Firmware Group for this Device</label><br/>
+      <select name="myDeviceChangeFWG" id="myDeviceChangeFWG" class="text ui-widget-content ui-corner-all fullWidth" size="1">
+      <option>... select ...</option>
+      </select> </p>
+
+      </fieldset>
+    </form>   
+</div>
 
 </div>
