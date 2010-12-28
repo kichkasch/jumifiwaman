@@ -11,18 +11,6 @@
             active: false,
         });        
 
-        /*
-        $("#myDevicesTable tbody").click(function(event) {
-            $(myDevTable.fnSettings().aoData).each(function (){
-                $(this.nTr).removeClass('row_selected');
-            });
-            $(event.target.parentNode).addClass('row_selected');
-        });
-        $('#deleteDevRow').click( function() {
-            var anSelected = fnGetSelected( myDevTable);
-            myDevTable.fnDeleteRow( anSelected[0] );    
-        } ); */
-        
         var myDevTable;
         myDevTable = $('#myDevicesTable').dataTable( {
             "sPaginationType": "full_numbers",
@@ -133,13 +121,21 @@
                 modal: true,
                 draggable: false ,
                 buttons: {
-                    'Add this release to Firmware Group': function() {
+                    'Add this release': function() {
                         $.post("/newRelease", {
                             fwReleaseNumber: $("#fwManualReleaseNumber").val(), 
                             fwReleaseDate:$("#fwManualReleaseDate").val(), 
                             fwGroupForRelease: $(nTds[0]).text(), 
                             fwReleaseDirectLink: $("#fwManualReleaseDirectLink").val()
                             });
+                        $('#firmwareTable').dataTable().fnClearTable(0);
+                        $('#firmwareTable').dataTable().fnDraw();                        
+                        $(this).dialog('close');
+                    },
+                    'Nothing new': function() {
+                        $.post("/updateChecked", {
+                            fwGroup: $(nTds[0]).text()
+                        });
                         $('#firmwareTable').dataTable().fnClearTable(0);
                         $('#firmwareTable').dataTable().fnDraw();                        
                         $(this).dialog('close');
@@ -201,6 +197,42 @@
             
         });  //click
         
+        $('#myDevDocumentUpdate').click(function() {
+            var anSelected3 = fnGetSelected(myDevTable);
+            var nTds3 = $('td', anSelected3);
+            var updatedDevName = $(nTds3[0]).text();        
+            var updatedFWGName = $(nTds3[2]).text();
+            $("#myDevUpdated").text(updatedDevName);
+            $('#dialogMyDevicesDocumentUpdate').dialog({
+                autoOpen: true,
+                width: 350,
+                modal: true,
+                draggable: false ,
+                buttons: {
+                    'Save to update history': function() {
+                            $.post("/documentUpdateToMyDevice", {
+                            deviceName: updatedDevName,
+                            fwgName: updatedFWGName,
+                            releaseName: $("#myDeviceUpdate").val()
+                            });
+                        $('#myDevicesTable').dataTable().fnClearTable( 0 );
+                        $('#myDevicesTable').dataTable().fnDraw();
+                        $(this).dialog('close');
+                    },
+                    Cancel: function() {
+                        $(this).dialog('close');
+                    }
+                },
+                close: function() {
+                    allFields.val('').removeClass('ui-state-error');
+                } //close
+            }); // dialog
+            $('#myDeviceUpdate').empty();            
+            $.get("/getRelasesForFWG", {groupName: updatedFWGName}, function(data){
+                $('#myDeviceUpdate').append(data);
+            });            
+            
+        });  //click        
         
     } );
     
@@ -433,6 +465,7 @@
     $('#dialogFWManualUpdateCheck').hide();
     $("#dialogMyDevicesNew").hide();
     $("#dialogMyDevicesChangeFWG").hide(); 
+    $('#dialogMyDevicesDocumentUpdate').hide();
     $("#tabs").tabs();
 
 	</script>

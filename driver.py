@@ -80,10 +80,13 @@ def main():
                                       ('/getLatestReleaseForFirmwareGroup', LatestRelease), 
                                       ('/getAllReleasesForFirmwareGroup', AllReleases), 
                                       ('/getFWGsForDevice', FWGsForDevice), 
+                                      ('/updateChecked', FWGUpdateChecked), 
+                                      ('/getRelasesForFWG', ReleasesForFirmwareGroup), 
 #                                      everything about user specific information (mydevices etc.)-> check myuser_requesthandler for details
                                       ('/getMyDevices', AllUserDevices), 
                                       ('/addToMyDevices', AddMyDevice), 
-                                      ('/applyFWGToMyDevice', ApplyFWGToDevice)
+                                      ('/applyFWGToMyDevice', ApplyFWGToDevice), 
+                                      ('/documentUpdateToMyDevice', UpdateMyDevice)
                                       ],
                                      debug=True)
     run_wsgi_app(application)

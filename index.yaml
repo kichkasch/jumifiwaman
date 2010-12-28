@@ -21,3 +21,16 @@ indexes:
   - name: group
   - name: version
     direction: desc
+
+- kind: UserDeviceUpdates
+  properties:
+  - name: device
+  - name: user
+  - name: updateDatetime
+
+- kind: UserDeviceUpdates
+  properties:
+  - name: device
+  - name: user
+  - name: updateDatetime
+    direction: desc

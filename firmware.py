@@ -12,7 +12,7 @@ class FirmwareGroup(db.Model):
     developmentStatus =  db.ReferenceProperty(DevelopmentStatus)
     origin =  db.ReferenceProperty(FirmwareSource)
     latestFirmware = None
-    lastCheck = db.DateTimeProperty()
+    lastCheck = db.DateProperty()
     homepage = db.StringProperty()
     notes = db.StringProperty()
 

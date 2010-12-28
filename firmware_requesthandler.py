@@ -45,6 +45,16 @@ class AddRelease(webapp.RequestHandler):
 #        release.insertMaintainer = query.fetch(1)[0]
         release.insertMaintainer = None
         release.put()
+        fwg.lastCheck = datetime.today().date()
+        fwg.put()        
+
+class FWGUpdateChecked(webapp.RequestHandler):
+    def post(self):
+        name = self.request.get('fwGroup')
+        query = FirmwareGroup.all().filter('name = ', name)
+        fwg = query.fetch(1)[0]
+        fwg.lastCheck = datetime.today().date()
+        fwg.put()
 
 class DetailsFirmwareGroup(webapp.RequestHandler):
     def get(self):
@@ -80,6 +90,18 @@ class AllReleases(webapp.RequestHandler):
             txt += "<tr><td>%s</td><td>%s</td></tr>\n" %(str(release.releaseDate), release.version)
         self.response.out.write(txt)        
         
+class ReleasesForFirmwareGroup(webapp.RequestHandler):
+    def get(self):
+        name = self.request.get('groupName')
+        query = FirmwareGroup.all().filter('name = ', name)
+        fwg = query.fetch(1)[0]
+        fwQuery = Firmware.all().filter("group =", fwg).order("-releaseDate")
+        fws = fwQuery.fetch(20)
+        txt = ""
+        for release in fws:
+            txt += "<option>%s</option>" %(release.version)
+        self.response.out.write(txt)    
+        
 class FirmwareGroups(webapp.RequestHandler):
     def get(self):
         sEcho = self.request.get('sEcho')
@@ -95,9 +117,13 @@ class FirmwareGroups(webapp.RequestHandler):
             fws = fwQuery.fetch(1)
             if fws:
                 fws = fws[0]
-                txt += '"'+ str(fws.version) + '", "'+ str(fws.releaseDate) + '", ""'
+                txt += '"'+ str(fws.version) + '", "'+ str(fws.releaseDate) + '",'
             else:
-                txt += '"", "", ""'
+                txt += '"", "",'
+            if fwg.lastCheck:
+                txt += '"' + str(fwg.lastCheck) + '"'
+            else:
+                txt +=  '""'
             txt += ']'
             i+=1            
         txt += ']}'

@@ -50,7 +50,15 @@ class AllUserDevices(webapp.RequestHandler):
             else:
                 fwgName = "n.a."
                 fwgLatest = "n.a."
-            txt += '["' + device.device.name + '","' + device.device.manufactorer.name + '","' + fwgName+ '","' + 'n.a.'+  '","' +'n.a.' +  '","' + fwgLatest+ '"]'
+            releaseQuery = UserDeviceUpdates.all().filter('user = ', myUser).filter('device = ', device.device).order('-updateDatetime')
+            releases = releaseQuery.fetch(1)
+            if releases:
+                relName = releases[0].release.version
+                relDate = str(releases[0].updateDatetime)
+            else:
+                relName = "n.a."
+                relDate = "n.a."
+            txt += '["' + device.device.name + '","' + device.device.manufactorer.name + '","' + fwgName+ '","' + relName+  '","' + relDate +  '","' + fwgLatest+ '"]'
             i+=1            
         txt += ']}'
         self.response.out.write(txt)
@@ -108,5 +116,30 @@ class ApplyFWGToDevice(webapp.RequestHandler):
             fwgItem = fw_query.fetch(1)[0]
             
         item.firmwareGroup = fwgItem
-        
         item.put()
+        
+class UpdateMyDevice(webapp.RequestHandler):
+    def post(self):
+        devName = self.request.get('deviceName')
+        device_query = Device.all().filter('name = ', devName)
+        devItem = device_query.fetch(1)[0]        
+        
+        fwgName = self.request.get('fwgName')
+        fw_query = FirmwareGroup.all().filter('name = ', fwgName)
+        fwgItem = fw_query.fetch(1)[0]
+        
+        releaseNumber = self.request.get('releaseName')
+        relQuery = Firmware.all().filter('group = ', fwgItem).filter('version = ', releaseNumber)
+        relItem = relQuery.fetch(1)[0]
+            
+        gUser = users.get_current_user()
+        query = User.all().filter('googleUser = ', gUser)
+        res = query.fetch(1)
+        myUser = res[0]
+        
+        udu = UserDeviceUpdates()
+        udu.user = myUser
+        udu.device = devItem
+        udu.release = relItem
+        udu.put()
+        
