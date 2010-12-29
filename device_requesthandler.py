@@ -57,7 +57,7 @@ class Devices(webapp.RequestHandler):
             if i:
                 txt += ","
             txt += '["' + device.deviceID + '","' + device.name + '","' + device.group.name + '","' + device.manufactorer.name + '"]'
-            i+=1            
+            i+=1      
         txt += ']}'
         self.response.out.write(txt)
         

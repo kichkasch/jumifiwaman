@@ -37,6 +37,7 @@ class AllUserDevices(webapp.RequestHandler):
         devices = device_query.fetch(numberRecords,  offset = startRecords)
         txt = '{"sEcho": ' + sEcho + ', "iTotalRecords": ' + str(nrDevices) + ', "iTotalDisplayRecords": '+ str(nrDevices) + ', "aaData":  ['
         for device in devices:
+            fws = 0
             if i:
                 txt += ","
             if device.firmwareGroup:
@@ -59,8 +60,20 @@ class AllUserDevices(webapp.RequestHandler):
             else:
                 relName = "n.a."
                 relDate = "n.a."
-            txt += '["' + device.device.name + '","' + device.device.manufactorer.name + '","' + fwgName+ '","' + relName+  '","' + relDate +  '","' + fwgLatest+ '"]'
-            i+=1            
+            txt += '["' + device.device.name + '","' + device.device.manufactorer.name + '","' + fwgName+ '","' + relName+  '","' + relDate +  '","' + fwgLatest+ '"'
+
+            # newer firmware available?
+            if fws:
+                if not releases:
+                    txt += ', "1"]'
+                elif releases[0].release.version != fws.version:
+                    txt += ', "1"]'
+                else:
+                    txt += ', "0"]'
+            else:
+                txt += ', "0"]'
+
+            i+=1
         txt += ']}'
         self.response.out.write(txt)
 

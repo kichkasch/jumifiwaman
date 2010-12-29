@@ -2,7 +2,7 @@ from firmware import *
 from myuser import User
 from google.appengine.ext import webapp
 from google.appengine.api import users
-from datetime import datetime
+from datetime import datetime, date
 
 class AddFirmwareSource(webapp.RequestHandler):
     def post(self):
@@ -120,10 +120,20 @@ class FirmwareGroups(webapp.RequestHandler):
                 txt += '"'+ str(fws.version) + '", "'+ str(fws.releaseDate) + '",'
             else:
                 txt += '"", "",'
+                
             if fwg.lastCheck:
-                txt += '"' + str(fwg.lastCheck) + '"'
+                txt += '"' + str(fwg.lastCheck) + '", '
             else:
-                txt +=  '""'
+                txt +=  '"", '
+
+            # long time no check for new firmware?
+            if not fwg.lastCheck:
+                txt += '"1"'
+            elif (date.today() - fwg.lastCheck).days > 30:    # check form firmware suggested after 30 days
+                txt += '"1"'
+            else:
+                txt += '"0"'
+
             txt += ']'
             i+=1            
         txt += ']}'

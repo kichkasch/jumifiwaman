@@ -18,16 +18,25 @@
             "bProcessing": true,
             "bServerSide": true,
             "sAjaxSource": "/getMyDevices",
+            "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                if ( aData[6] == "1" )
+                {
+                    $(myDevTable.fnSettings().aoData[iDisplayIndex].nTr).addClass("gradeX");   
+                }
+                return nRow;
+            },
             "aoColumns": [
                     { "bSearchable": true},
                     null,
                     { "bSortable": false },
                     { "bSortable": false },
                     null,
-                    null
+                    null,
+                    {"bVisible" : false},                    
                     ],
             "sSearch": false    
         });
+
         $('#myDevicesTable').click(function(event) {
             $(myDevTable.fnSettings().aoData).each(function (){
                 $(this.nTr).removeClass('row_selected');    // deselect before selected
@@ -35,7 +44,8 @@
             $(event.target.parentNode).addClass('row_selected');
         });
         
-        $('#devicesTable').dataTable( {
+        var devTable;
+        devTable = $('#devicesTable').dataTable( {
             "sPaginationType": "full_numbers",
             "bJQueryUI": true,
             "bProcessing": true,
@@ -47,12 +57,12 @@
                     { "bSortable": false },
                     { "bSortable": false }
                     ],
-            "sSearch": false    
+            "sSearch": false            
         });
 
         $('#deviceGroupsTable').dataTable( {
             "sPaginationType": "full_numbers",
-            "bJQueryUI": true,
+            "bJQueryUI": true
         });
 
         $('#manufactorersTable').dataTable( {
@@ -66,8 +76,26 @@
             "bJQueryUI": true,
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": "/getFirmwareGroups"
+            "sAjaxSource": "/getFirmwareGroups",
+            "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                if ( aData[6] == "1" )
+                {
+                        $(myFirmwareTable.fnSettings().aoData[iDisplayIndex].nTr).addClass("gradeX");   
+                }
+                return nRow;
+            },
+            "aoColumns": [
+                    {sWidth : '20%'},
+                    {sWidth : '20%'},
+                    {sWidth : '20%'},
+                    {sWidth : '20%'},
+                    {sWidth : '10%'},
+                    {sWidth : '10%'},
+                    {"bVisible" : false}              
+                    ],
+            "sSearch": false
         });
+        
         $("#firmwareTable tbody").click(function(event) {
             $(myFirmwareTable.fnSettings().aoData).each(function (){
                 $(this.nTr).removeClass('row_selected');    // deselect before selected
