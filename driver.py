@@ -83,6 +83,7 @@ def main():
                                       ('/getFWGsForDevice', FWGsForDevice), 
                                       ('/updateChecked', FWGUpdateChecked), 
                                       ('/getRelasesForFWG', ReleasesForFirmwareGroup), 
+                                      ('/details/releaseDetails', DetailsForRelease), 
 #                                      everything about user specific information (mydevices etc.)-> check myuser_requesthandler for details
                                       ('/getMyDevices', AllUserDevices), 
                                       ('/addToMyDevices', AddMyDevice), 

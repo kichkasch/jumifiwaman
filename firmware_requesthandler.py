@@ -147,3 +147,15 @@ class FWGsForDevice(webapp.RequestHandler):
         for fwg in fwgs:
             txt += '<option>' + fwg.name + '</option>'
         self.response.out.write(txt)
+
+class DetailsForRelease(webapp.RequestHandler):
+    def get(self):
+        version = self.request.get('version')
+        fwQuery = Firmware.all().filter("version =", version)
+        fws = fwQuery.fetch(1)
+        if fws:
+            release = fws[0]
+            txt = "%s\n%s\n%s" %(release.version, release.releaseDate, release.downloadLink)
+        else:
+            txt = 'n.a.\nn.a.\n#\n'
+        self.response.out.write(txt)

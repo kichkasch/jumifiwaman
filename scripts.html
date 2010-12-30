@@ -1,4 +1,24 @@
 <script type="text/javascript">
+// FUNCTIONS definitions
+function updateMyDeviceLink(release, fwg) {
+    if (release != null)
+    {
+        $.get("/details/releaseDetails", {version: release}, function(data){
+            var vals = data.split("\n");         
+            $('#myDevLinkLabel').text(vals[2]);
+            $("#myDevLink").attr("href", vals[2]);
+        });
+    } else {
+        $.get("/getLatestReleaseForFirmwareGroup", {groupName: fwg}, function(data){
+            var vals = data.split("\n");         
+            $('#myDevLinkLabel').text(vals[2]);
+            $("#myDevLink").attr("href", vals[2]);
+        });    
+    }
+}
+// END definitions
+
+
     $(document).ready(function() {
         $("#accordionDevices").accordion({
             autoHeight: false,
@@ -259,9 +279,12 @@
             $('#myDeviceUpdate').empty();            
             $.get("/getRelasesForFWG", {groupName: updatedFWGName}, function(data){
                 $('#myDeviceUpdate').append(data);
-            });            
-            
+            });
+            updateMyDeviceLink(null, updatedFWGName);
         });  //click        
+        $('#myDeviceUpdate').change(function() {
+            updateMyDeviceLink($("#myDeviceUpdate").val(), null);
+        });
         
         $('#myDevDetails').click(function() {
             var anSelected4 = fnGetSelected(myDevTable);
@@ -498,8 +521,7 @@
                 $('#myDeviceNewDeviceFWG').append(data);
             });            
         });
-            
-        
+
         $('#myDeviceGroup').change(function() {
             $('#myDeviceNewDevice').empty();            
             $.get("/getDevicesForGroup", {deviceGroup: $("#myDeviceGroup").val()}, function(data){
