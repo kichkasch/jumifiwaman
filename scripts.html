@@ -1,9 +1,13 @@
 <script type="text/javascript">
+// *****
 // FUNCTIONS definitions
+// 
 function updateMyDeviceLink(release, fwg) {
+// within dialog for updating my device; update the direct download link whenever a release is selected
+// either give a specific release number as parameter or provide only firmware group - then latest release will be taken (for initialization)
     if (release != null)
     {
-        $.get("/details/releaseDetails", {version: release}, function(data){
+        $.get("/details/releaseDetails", {version: release, groupName: fwg}, function(data){
             var vals = data.split("\n");         
             $('#myDevLinkLabel').text(vals[2]);
             $("#myDevLink").attr("href", vals[2]);
@@ -17,6 +21,7 @@ function updateMyDeviceLink(release, fwg) {
     }
 }
 // END definitions
+// *****
 
 
     $(document).ready(function() {
@@ -245,11 +250,12 @@ function updateMyDeviceLink(release, fwg) {
             
         });  //click
         
+        var updatedFWGName
         $('#myDevDocumentUpdate').click(function() {
             var anSelected3 = fnGetSelected(myDevTable);
             var nTds3 = $('td', anSelected3);
             var updatedDevName = $(nTds3[0]).text();        
-            var updatedFWGName = $(nTds3[2]).text();
+            updatedFWGName = $(nTds3[2]).text();
             $("#myDevUpdated").text(updatedDevName);
             $('#dialogMyDevicesDocumentUpdate').dialog({
                 autoOpen: true,
@@ -283,7 +289,7 @@ function updateMyDeviceLink(release, fwg) {
             updateMyDeviceLink(null, updatedFWGName);
         });  //click        
         $('#myDeviceUpdate').change(function() {
-            updateMyDeviceLink($("#myDeviceUpdate").val(), null);
+            updateMyDeviceLink($("#myDeviceUpdate").val(), updatedFWGName);
         });
         
         $('#myDevDetails').click(function() {

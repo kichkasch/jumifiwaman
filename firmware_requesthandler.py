@@ -150,8 +150,11 @@ class FWGsForDevice(webapp.RequestHandler):
 
 class DetailsForRelease(webapp.RequestHandler):
     def get(self):
+        name = self.request.get('groupName')
+        query = FirmwareGroup.all().filter('name = ', name)
+        fwg = query.fetch(1)[0]
         version = self.request.get('version')
-        fwQuery = Firmware.all().filter("version =", version)
+        fwQuery = Firmware.all().filter("group =", fwg).filter("version =", version)
         fws = fwQuery.fetch(1)
         if fws:
             release = fws[0]
