@@ -536,12 +536,25 @@ function updateMyDeviceLink(release, fwg) {
         });
         
         $('#buttonProfile').click(function() {
-            $.post("/sendTestMail", {});
+            $("#dialog-profile").dialog({
+                width: 600,
+                modal: true,
+                draggable: false ,
+                closeText: 'show',
+                autoOpen: true,
+                buttons: { 
+                    "Save": function() { $(this).dialog("close"); },
+                    "Cancel": function() { $(this).dialog("close"); } 
+                },
+            });        
         });
         
     });
 
     $('#dialog-help').hide();
+
+    $("#profileTabs").tabs();
+    $('#dialog-profile').hide();
     $('#date').datepicker();    
     $("#dialog-help").dialog("destroy");
     $("#deviceDetailToggler").hide();
@@ -560,5 +573,6 @@ function updateMyDeviceLink(release, fwg) {
     $('#dialogMyDevicesDetails').hide();
     $("#tabs").tabs();
 
+    
 	</script>
 
