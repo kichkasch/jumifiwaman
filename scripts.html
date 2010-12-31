@@ -549,11 +549,21 @@ function updateMyDeviceLink(release, fwg) {
             });        
         });
         
+        $('#profileEmailRegular').click(function() {
+            $("#profileEmailRegularDetails").toggle();
+        });
+        
+        $('#profileEmailType2').click(function() {
+            $("#toggleProfileEmailAddress").toggle();
+        });
+        
     });
 
     $('#dialog-help').hide();
 
     $("#profileTabs").tabs();
+    $("#profileEmailRegularDetails").show();
+    $("#toggleProfileEmailAddress").hide();
     $('#dialog-profile').hide();
     $('#date').datepicker();    
     $("#dialog-help").dialog("destroy");

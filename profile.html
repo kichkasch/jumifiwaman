@@ -1,16 +1,52 @@
 <div id="dialog-profile" title="Profile Settings">
 <p>
 
-<div id="profileTabs">
+<div id="profileTabs" class="tabs-container" >
 <ul>
 	<li><a href="#firsttabProfile">Notification</a></li>
 	<li><a href="#secondtabProfile">Appearance</a></li> 
 </ul>
 
-<div id="firsttabProfile">test1</div>
-<div id="secondtabProfile">test2</div>
-</div> <!--tabs -->
-        
+<div id="firsttabProfile">
+<p>Configure, whether and how you want to be informed about new firmware updates for your devices.
+<hr/>
+<form>
+<strong>Send updates on available firmwares</strong>
+    <fieldset>
+      <input type="checkbox" id="profileEmailEach" name="profileEmailEach" value="yes" class="text ui-widget-content ui-corner-all">each time one of my devices can be updated<br>
+      <input type="checkbox" id="profileEmailRegular" name="profileEmailRegular" value="yes" class="text ui-widget-content ui-corner-all">in a bulk update on a regular basis<br>
+
+      <div id="profileEmailRegularDetails" class="indentSlightly">
+        <input type="radio" id="profileEmailInterval" name="profileEmailInterval" value="daily" class="text ui-widget-content ui-corner-all">Daily<br>
+        <input type="radio" id="profileEmailInterval" name="profileEmailInterval" value="weekly" class="text ui-widget-content ui-corner-all">Weekly<br>
+        <input type="radio" id="profileEmailInterval" name="profileEmailInterval" value="monthly" class="text ui-widget-content ui-corner-all">Monthly<br>
+      </div> <!--profileEmailRegularDetails-->
+      
+    </fieldset>
+</form> 
+
+<hr/>
+<p><strong>Use the following email address</strong>
+<form>
+    <fieldset>
+        <input type="radio" id="profileEmailType1" name="profileEmailType" value="login" class="text ui-widget-content ui-corner-all">Login address<br>
+        <input type="radio" id="profileEmailType2" name="profileEmailType" value="login" class="text ui-widget-content ui-corner-all">Specify other address ...<br>
+      <div id="toggleProfileEmailAddress" class="indentSlightly">
+        <label for="inputProfileEmailAddress">Name</label>
+        <input type="text" name="inputProfileEmailAddress" id="inputProfileEmailAddress" class="text ui-widget-content ui-corner-all" />
+      </div> <!--toggleProfileEmailAddress-->
+
+    </fieldset>
+</form> 
+
 </p>
+
+
 </div>
 
+
+<div id="secondtabProfile">test2</div>
+</div> <!--tabs -->
+
+</p>
+</div>
