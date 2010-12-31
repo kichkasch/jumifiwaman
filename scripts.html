@@ -535,6 +535,10 @@ function updateMyDeviceLink(release, fwg) {
             });                            
         });
         
+        $('#buttonProfile').click(function() {
+            $.post("/sendTestMail", {});
+        });
+        
     });
 
     $('#dialog-help').hide();

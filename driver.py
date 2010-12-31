@@ -63,6 +63,7 @@ class MainPage(webapp.RequestHandler):
 def main():
     application = webapp.WSGIApplication(
                                      [('/', MainPage),
+                                      ('/sendTestMail', TestMail),                                         
 #                                      everything about devices -> check device_requesthandler for details
                                       ('/newDevice', AddDevice), 
                                       ('/newDeviceGroup', AddDeviceGroup), 

@@ -4,6 +4,7 @@ from firmware import FirmwareGroup, Firmware
 from google.appengine.ext import webapp
 from google.appengine.api import users
 from datetime import datetime
+from google.appengine.api import mail
 
 class AllUserDevices(webapp.RequestHandler):
     def get(self):
@@ -182,3 +183,14 @@ class UpdatesForUserDevice (webapp.RequestHandler):
         for release in releases:
             txt += "<tr><td>%s</td><td>%s</td><td>%s</td></tr>\n" %(str(release.updateDatetime.date()), release.release.group.name, release.release.version)
         self.response.out.write(txt)            
+
+class TestMail(webapp.RequestHandler):
+    def post(self):
+            receiver_address = "kichkasch@gmx.de"
+            sender_address = "Jumi Firmware Manager Admin <jumifiwaman10@googlemail.com>"
+            subject = "TestEmail"
+            body = """
+Thank you for creating an account!  Please confirm your email address by
+clicking on the link below:
+"""
+            mail.send_mail(sender_address, receiver_address, subject, body)        
