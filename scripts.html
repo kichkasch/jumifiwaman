@@ -550,19 +550,36 @@ function updateMyDeviceLink(release, fwg) {
         });
         
         $('#profileEmailRegular').click(function() {
-            $("#profileEmailRegularDetails").toggle();
+	  if ($('#profileEmailRegular').attr('checked') == true)
+	  {  
+            $("#profileEmailRegularDetails").show();
+	  } else {
+            $("#profileEmailRegularDetails").hide();
+	  }
         });
         
         $('#profileEmailType2').click(function() {
-            $("#toggleProfileEmailAddress").toggle();
+	  if ($('#profileEmailType2').attr('checked') == true)
+	  {  
+            $("#toggleProfileEmailAddress").show();
+	  } else {
+            $("#toggleProfileEmailAddress").hide();
+	  }
         });
-        
+        $('#profileEmailType1').click(function() {
+	  if ($('#profileEmailType2').attr('checked') == true)
+	  {  
+            $("#toggleProfileEmailAddress").show();
+	  } else {
+            $("#toggleProfileEmailAddress").hide();
+	  }
+        });        
     });
 
     $('#dialog-help').hide();
 
     $("#profileTabs").tabs();
-    $("#profileEmailRegularDetails").show();
+    $("#profileEmailRegularDetails").hide();
     $("#toggleProfileEmailAddress").hide();
     $('#dialog-profile').hide();
     $('#date').datepicker();    
