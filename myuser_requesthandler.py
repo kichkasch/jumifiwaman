@@ -186,11 +186,48 @@ class UpdatesForUserDevice (webapp.RequestHandler):
 
 class TestMail(webapp.RequestHandler):
     def post(self):
-            receiver_address = "kichkasch@gmx.de"
+        gUser = users.get_current_user()
+        query = User.all().filter('googleUser = ', gUser)
+        res = query.fetch(1)
+        myUser = res[0]        
+
+        query = UserProfile().all().filter('user = ', myUser)
+        res = query.fetch(1)
+        if res:
+            myProfile = res[0]
+            if myProfile.emailUserLoginAddress:
+                receiver_address = gUser.email()
+            else:
+                receiver_address = myProfile.emailSpecifiedAddress
             sender_address = "Jumi Firmware Manager Admin <jumifiwaman10@googlemail.com>"
             subject = "TestEmail"
-            body = """
-Thank you for creating an account!  Please confirm your email address by
-clicking on the link below:
-"""
+            body = """This is a test email from JuMiFiWaMan"""
             mail.send_mail(sender_address, receiver_address, subject, body)        
+
+class UpdateUserProfile(webapp.RequestHandler):
+    def post(self):
+        updateEach = self.request.get('updateEach')
+        updateRegular = self.request.get('updateRegular')
+        updateRegularInterval = self.request.get('updateRegularInterval')
+        updateEmailType = self.request.get('updateEmailType')
+        updateEmailAddress = self.request.get('updateEmailAddress')
+
+        gUser = users.get_current_user()
+        query = User.all().filter('googleUser = ', gUser)
+        res = query.fetch(1)
+        myUser = res[0]        
+
+        query = UserProfile().all().filter('user = ', myUser)
+        res = query.fetch(1)
+        if res:
+            myProfile = res[0]
+        else:
+            myProfile = UserProfile()
+            myProfile.user = myUser
+
+        myProfile.emailUpdateEach = (updateEach.strip().lower() == "true")
+        myProfile.emailUpateBulk = (updateRegular.strip().lower() == "true")
+        myProfile.emailRegularInterval = updateRegularInterval
+        myProfile.emailUserLoginAddress = (updateEmailType.strip().lower() == "true")
+        myProfile.emailSpecifiedAddress = updateEmailAddress 
+	myProfile.put()

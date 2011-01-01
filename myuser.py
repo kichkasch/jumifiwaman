@@ -20,3 +20,11 @@ class UserDeviceUpdates(db.Model):
     device = db.ReferenceProperty(Device)
     release = db.ReferenceProperty(Firmware)
     updateDatetime = db.DateTimeProperty(auto_now_add=True)
+
+class UserProfile(db.Model):
+    user = db.ReferenceProperty(User)
+    emailUpdateEach = db.BooleanProperty()
+    emailUpateBulk = db.BooleanProperty()
+    emailRegularInterval = db.StringProperty(choices=set(["daily", "weekly", "monthly"]))
+    emailUserLoginAddress = db.BooleanProperty()
+    emailSpecifiedAddress = db.StringProperty()

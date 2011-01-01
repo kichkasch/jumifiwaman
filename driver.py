@@ -90,7 +90,8 @@ def main():
                                       ('/addToMyDevices', AddMyDevice), 
                                       ('/applyFWGToMyDevice', ApplyFWGToDevice), 
                                       ('/documentUpdateToMyDevice', UpdateMyDevice), 
-                                      ('/getAllUpdatesForUserDevice', UpdatesForUserDevice)
+                                      ('/getAllUpdatesForUserDevice', UpdatesForUserDevice),
+                                      ('/profile/updateProfile', UpdateUserProfile),
                                       ],
                                      debug=True)
     run_wsgi_app(application)

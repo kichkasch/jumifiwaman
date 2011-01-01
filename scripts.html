@@ -543,8 +543,20 @@ function updateMyDeviceLink(release, fwg) {
                 closeText: 'show',
                 autoOpen: true,
                 buttons: { 
-                    "Save": function() { $(this).dialog("close"); },
-                    "Cancel": function() { $(this).dialog("close"); } 
+                    "Send Test Mail": function() {
+                        $.post("/sendTestMail", {});
+                    },
+                    "Save": function() { 
+                        $.post("/profile/updateProfile", {
+                            updateEach: 	$('#profileEmailEach').attr('checked'),
+                            updateRegular: 	$('#profileEmailRegular').attr('checked'),
+			    updateRegularInterval: $('#profileEmailRegularDetails').val(),
+			    updateEmailType:	$('#profileEmailType1').attr('checked'),
+			    updateEmailAddress:	$('#inputProfileEmailAddress').val()
+                        });
+			$(this).dialog("close"); 
+		    },
+                    "Cancel": function() { $(this).dialog("close"); }
                 },
             });        
         });
