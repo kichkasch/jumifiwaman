@@ -1,5 +1,6 @@
 from firmware import *
 from myuser import User
+from myuser_requesthandler import informUsersOnUpdate
 from google.appengine.ext import webapp
 from google.appengine.api import users
 from datetime import datetime, date
@@ -46,7 +47,8 @@ class AddRelease(webapp.RequestHandler):
         release.insertMaintainer = None
         release.put()
         fwg.lastCheck = datetime.today().date()
-        fwg.put()        
+        fwg.put() 
+        informUsersOnUpdate(fwg, release)       
 
 class FWGUpdateChecked(webapp.RequestHandler):
     def post(self):

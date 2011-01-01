@@ -231,3 +231,24 @@ class UpdateUserProfile(webapp.RequestHandler):
         myProfile.emailUserLoginAddress = (updateEmailType.strip().lower() == "true")
         myProfile.emailSpecifiedAddress = updateEmailAddress 
 	myProfile.put()
+
+def informUsersOnUpdate(fwg, release):
+    query = UserDevices.all().filter('firmwareGroup = ', fwg)
+    res = query.fetch(1000)
+    for ud in res:
+        myUser = ud.user
+        query = UserProfile().all().filter('user = ', myUser)
+        res = query.fetch(1)
+        if res:
+            myProfile = res[0]
+            if not myProfile.emailUpdateEach:
+                continue
+            if myProfile.emailUserLoginAddress:
+                receiver_address = myUser.googleUser.email()
+            else:
+                receiver_address = myProfile.emailSpecifiedAddress
+            sender_address = "Jumi Firmware Manager Admin <jumifiwaman10@googlemail.com>"
+            subject = "New release available"
+            body = """A new firmware has been released\n\tfor %s\n\tRelease number: %s\n\tFirmware Group: %s\n\nVisit http://jumifiwaman.appspot.com/ for updating.""" %(ud.device.name, release.version, fwg.name)
+            mail.send_mail(sender_address, receiver_address, subject, body)   
+
