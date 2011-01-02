@@ -15,6 +15,7 @@ from myuser import User
 from firmware_requesthandler import *
 from device_requesthandler import *
 from myuser_requesthandler import *
+from cron_requesthandler import *
 
 class MainPage(webapp.RequestHandler):
     
@@ -92,6 +93,8 @@ def main():
                                       ('/documentUpdateToMyDevice', UpdateMyDevice), 
                                       ('/getAllUpdatesForUserDevice', UpdatesForUserDevice),
                                       ('/profile/updateProfile', UpdateUserProfile),
+#                                      everything about scheduled jobs
+                                      ('/cron/dailyUpdate', DailyCron),
                                       ],
                                      debug=True)
     run_wsgi_app(application)

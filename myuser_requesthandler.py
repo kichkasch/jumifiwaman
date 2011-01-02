@@ -226,7 +226,7 @@ class UpdateUserProfile(webapp.RequestHandler):
             myProfile.user = myUser
 
         myProfile.emailUpdateEach = (updateEach.strip().lower() == "true")
-        myProfile.emailUpateBulk = (updateRegular.strip().lower() == "true")
+        myProfile.emailUpdateBulk = (updateRegular.strip().lower() == "true")
         myProfile.emailRegularInterval = updateRegularInterval
         myProfile.emailUserLoginAddress = (updateEmailType.strip().lower() == "true")
         myProfile.emailSpecifiedAddress = updateEmailAddress 

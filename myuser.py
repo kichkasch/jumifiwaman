@@ -24,7 +24,7 @@ class UserDeviceUpdates(db.Model):
 class UserProfile(db.Model):
     user = db.ReferenceProperty(User)
     emailUpdateEach = db.BooleanProperty()
-    emailUpateBulk = db.BooleanProperty()
+    emailUpdateBulk = db.BooleanProperty()
     emailRegularInterval = db.StringProperty(choices=set(["daily", "weekly", "monthly"]))
     emailUserLoginAddress = db.BooleanProperty()
     emailSpecifiedAddress = db.StringProperty()

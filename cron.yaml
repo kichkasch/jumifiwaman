@@ -1,0 +1,5 @@
+cron:
+- description: daily summary job
+  url: /cron/dailyUpdate
+  schedule: every day 05:00
+
