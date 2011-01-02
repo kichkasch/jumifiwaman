@@ -8,6 +8,7 @@ from firmware import FirmwareGroup, Firmware
 class User(db.Model):
     googleUser = db.UserProperty()
 #    role = db.StringProperty(choices=set(["read", "add", "delete"]))
+
     
 # n-m relation
 class UserDevices(db.Model):
@@ -28,3 +29,9 @@ class UserProfile(db.Model):
     emailRegularInterval = db.StringProperty(choices=set(["daily", "weekly", "monthly"]))
     emailUserLoginAddress = db.BooleanProperty()
     emailSpecifiedAddress = db.StringProperty()
+
+    def getEmailAdress(self):
+        if self.emailUserLoginAddress:
+            return self.user.googleUser.email()
+        else:
+            return self.emailSpecifiedAddress
