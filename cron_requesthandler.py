@@ -38,22 +38,22 @@ class DailyCron(webapp.RequestHandler):
             txt += """\nRequired action: """
             if fwLatest:
                 if not releases:
-                    txt += 'Install Release Number %s' + fwLatest[0].version + "\n"
+                    txt += 'Install Release Number %s\n' %(fwLatest[0].version)
                 elif releases[0].release.version != fwLatest[0].version:
-                    txt += 'Install Release Number %s' + fwLatest[0].version + "\n"
+                    txt += 'Install Release Number %s\n' %(fwLatest[0].version)
                 else:
                     txt += 'None\n'
             else:
                 txt += 'None\n'
 
 
-            txt += "-" * 60
+            txt += "\n" + "-" * 60 + "\n"
 
         txt += "=" * 80
         return txt
 
     def _assembleStatusUpdate(self, myUser, stFrequency):
-        body = """%s JuMiFiWaMan Status Update\n.""" %(stFrequency)
+        body = """%s JuMiFiWaMan Status Update\n""" %(stFrequency)
         body += self._assembleMyDevSection(myUser)
 	return body
 
