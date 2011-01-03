@@ -9,7 +9,7 @@ from google.appengine.api import mail
 class DailyCron(webapp.RequestHandler):
     def _assembleMyDevSection(self, myUser):
         txt = "=" * 80 + "\n"
-        summary = "=" * 80 + "\nAction summary: \n"
+        summary = "=" * 80 + "\nAction summary: \n\n"
         device_query = UserDevices.all().filter('user = ', myUser)
         uds = device_query.fetch(100)
         for ud in uds:
@@ -65,10 +65,25 @@ class DailyCron(webapp.RequestHandler):
         res = query.fetch(1000)
         for myProfile in res:
             myUser = myProfile.user
-            interval = myProfile.emailRegularInterval # tbd
+            interval = myProfile.emailRegularInterval
             receiver_address = myProfile.getEmailAdress()
             subject = "Status Update" 
-            body = self._assembleStatusUpdate(myUser, "Daily")
-            body += """\nVisit %s for updating and subscription settings.""" %(serversettings.APP_URL)
-            mail.send_mail(serversettings.SENDER_ADDRESS, receiver_address, subject, body)   
+            if interval == "daily":
+                body = self._assembleStatusUpdate(myUser, "Daily")
+            elif interval == "weekly":
+                if datetime.today().isoweekday() == serversettings.DAY_OF_WEEK:
+                    body = self._assembleStatusUpdate(myUser, "Weekly")
+                else:
+                    body = None
+            elif interval == "monthly":
+                if datetime.today().day == serversettings.DAY_OF_MONTH:
+                    body = self._assembleStatusUpdate(myUser, "Monthly")
+                else:
+                    body = None
+            else:
+                body = None
+
+            if body:
+                body += """\nVisit %s for updating and subscription settings.""" %(serversettings.APP_URL)
+                mail.send_mail(serversettings.SENDER_ADDRESS, receiver_address, subject, body)   
 

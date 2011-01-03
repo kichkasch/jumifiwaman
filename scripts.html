@@ -547,10 +547,18 @@ function updateMyDeviceLink(release, fwg) {
                         $.post("/sendTestMail", {});
                     },
                     "Save": function() { 
+			var interval;
+			if ($('#profileEmailInterval1').attr('checked')) {
+				interval = "daily";
+			} else if ($('#profileEmailInterval2').attr('checked')) {
+				interval = "weekly";
+			} else if ($('#profileEmailInterval3').attr('checked')) {
+				interval = "monthly";
+			} 
                         $.post("/profile/updateProfile", {
                             updateEach: 	$('#profileEmailEach').attr('checked'),
                             updateRegular: 	$('#profileEmailRegular').attr('checked'),
-			    updateRegularInterval: $('#profileEmailRegularDetails').val(),
+			    updateRegularInterval: interval,
 			    updateEmailType:	$('#profileEmailType1').attr('checked'),
 			    updateEmailAddress:	$('#inputProfileEmailAddress').val()
                         });
