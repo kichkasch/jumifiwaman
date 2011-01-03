@@ -9,6 +9,7 @@ from google.appengine.api import mail
 class DailyCron(webapp.RequestHandler):
     def _assembleMyDevSection(self, myUser):
         txt = "=" * 80 + "\n"
+        summary = "=" * 80 + "\nAction summary: \n"
         device_query = UserDevices.all().filter('user = ', myUser)
         uds = device_query.fetch(100)
         for ud in uds:
@@ -39,6 +40,7 @@ class DailyCron(webapp.RequestHandler):
             if fwLatest:
                 if not releases:
                     txt += 'Install Release Number %s\n' %(fwLatest[0].version)
+                    summary += """%s: Install release %s\n""" %(device.name, fwLatest[0].version) 
                 elif releases[0].release.version != fwLatest[0].version:
                     txt += 'Install Release Number %s\n' %(fwLatest[0].version)
                 else:
@@ -46,15 +48,16 @@ class DailyCron(webapp.RequestHandler):
             else:
                 txt += 'None\n'
 
-
             txt += "\n" + "-" * 60 + "\n"
 
         txt += "=" * 80
+        txt = summary + txt
         return txt
 
     def _assembleStatusUpdate(self, myUser, stFrequency):
         body = """%s JuMiFiWaMan Status Update\n""" %(stFrequency)
-        body += self._assembleMyDevSection(myUser)
+        myDevs = self._assembleMyDevSection(myUser)
+        body += myDevs
 	return body
 
     def get(self):
