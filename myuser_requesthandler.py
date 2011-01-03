@@ -232,6 +232,28 @@ class UpdateUserProfile(webapp.RequestHandler):
         myProfile.emailSpecifiedAddress = updateEmailAddress 
 	myProfile.put()
 
+class LoadUserProfile(webapp.RequestHandler):
+    def get(self):
+        txt = ""
+
+        gUser = users.get_current_user()
+        query = User.all().filter('googleUser = ', gUser)
+        res = query.fetch(1)
+        myUser = res[0]        
+
+        query = UserProfile().all().filter('user = ', myUser)
+        res = query.fetch(1)
+        if res:
+            myProfile = res[0]
+            txt += str(myProfile.emailUpdateEach).lower() + "\n"
+            txt += str(myProfile.emailUpdateBulk).lower() + "\n"
+            txt += myProfile.emailRegularInterval + "\n"
+            txt += str(myProfile.emailUserLoginAddress).lower() + "\n"
+            txt += myProfile.emailSpecifiedAddress + "\n"
+        else:
+            txt = "None"  + "\n"
+        self.response.out.write(txt)            
+
 def informUsersOnUpdate(fwg, release):
     query = UserDevices.all().filter('firmwareGroup = ', fwg)
     res = query.fetch(1000)

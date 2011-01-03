@@ -536,6 +536,28 @@ function updateMyDeviceLink(release, fwg) {
         });
         
         $('#buttonProfile').click(function() {
+            $.get("/profile/loadProfile", {}, function(data){
+                var vals = data.split("\n");
+		$('#profileEmailEach').attr('checked', vals[0] == "true");
+		$('#profileEmailRegular').attr('checked', vals[1] == "true");
+		if (vals[1] == "true") {
+			$('#profileEmailInterval1').attr('checked', vals[2] == "daily");
+			$('#profileEmailInterval2').attr('checked', vals[2] == "weekly");
+			$('#profileEmailInterval3').attr('checked', vals[2] == "monthly");
+			$("#profileEmailRegularDetails").show();
+		} else {
+			$("#profileEmailRegularDetails").hide();
+		}
+		$('#profileEmailType1').attr('checked', vals[3] == "true");
+		$('#profileEmailType2').attr('checked', vals[3] != "true");
+		if (vals[3] != "true") {
+			$("#inputProfileEmailAddress").val(vals[4]);
+			$("#toggleProfileEmailAddress").show();
+		} else {
+			$("#toggleProfileEmailAddress").hide();
+		}
+            }); 
+
             $("#dialog-profile").dialog({
                 width: 600,
                 modal: true,

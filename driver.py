@@ -93,6 +93,7 @@ def main():
                                       ('/documentUpdateToMyDevice', UpdateMyDevice), 
                                       ('/getAllUpdatesForUserDevice', UpdatesForUserDevice),
                                       ('/profile/updateProfile', UpdateUserProfile),
+                                      ('/profile/loadProfile', LoadUserProfile),
 #                                      everything about scheduled jobs
                                       ('/cron/dailyUpdate', DailyCron),
                                       ],
