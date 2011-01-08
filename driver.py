@@ -16,21 +16,22 @@ from firmware_requesthandler import *
 from device_requesthandler import *
 from myuser_requesthandler import *
 from cron_requesthandler import *
+from serversettings import *
 
 class MainPage(webapp.RequestHandler):
     
     def get(self):
         groupQuery = DeviceGroup.all().order('name')
-        groups = groupQuery.fetch(100)
+        groups = groupQuery.fetch(UPPER_LIMIT_GROUP_QUERIES)
 
         manQuery = Manufactorer.all().order('name')
-        mans = manQuery.fetch(100)
+        mans = manQuery.fetch(UPPER_LIMIT_GROUP_QUERIES)
 
         fwSourceQuery = FirmwareSource.all().order('name')
-        fwSources = fwSourceQuery.fetch(100)
+        fwSources = fwSourceQuery.fetch(UPPER_LIMIT_GROUP_QUERIES)
         
         fwStatusQuery = DevelopmentStatus.all().order('name')
-        fwStatus = fwStatusQuery.fetch(100)
+        fwStatus = fwStatusQuery.fetch(UPPER_LIMIT_GROUP_QUERIES)
 
         u = User()
         if users.get_current_user():
@@ -41,26 +42,34 @@ class MainPage(webapp.RequestHandler):
             url = users.create_logout_url(self.request.uri)
             url_linktext = 'Logout'
             profText = 'Profile Settings'
+
+            template_values = {
+                'groups': groups, 
+                'manufactorers': mans, 
+                'userText': userText, 
+                'url': url, 
+                'urlText': url_linktext, 
+                'profileText': profText, 
+                'firmwareSources': fwSources, 
+                'firmwareStatus': fwStatus
+                }
+
+            path = os.path.join(os.path.dirname(__file__), 'index.html')
+            self.response.out.write(template.render(path, template_values))
+
         else:
-            userText = "<none>"
+#            userText = "<none>"
             url = users.create_login_url(self.request.uri)
-            url_linktext = 'Login'          
-            profText = None
+#            url_linktext = 'Login'          
+#            profText = None
+            template_values = {
+                'loginUrl': url
+                }
 
-        template_values = {
-            'groups': groups, 
-            'manufactorers': mans, 
-            'userText': userText, 
-            'url': url, 
-            'urlText': url_linktext, 
-            'profileText': profText, 
-            'firmwareSources': fwSources, 
-            'firmwareStatus': fwStatus
-            }
+            path = os.path.join(os.path.dirname(__file__), 'login_refer.html')
+            self.response.out.write(template.render(path, template_values))
 
-        path = os.path.join(os.path.dirname(__file__), 'index.html')
-        self.response.out.write(template.render(path, template_values))
-    
+
 def main():
     application = webapp.WSGIApplication(
                                      [('/', MainPage),
